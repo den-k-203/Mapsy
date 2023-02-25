@@ -19,7 +19,7 @@ class AuthController {
             const candidateEmail: User | null = await UserModel.findOne({email: email});
             const candidateLogin: User | null = await UserModel.findOne({login: login});
 
-            if(!candidateEmail || !candidateLogin) {
+            if(candidateEmail || candidateLogin) {
                 return response.status(400).json(message("Користувач з таким логіном або паролем вже створений."));
             }
 
@@ -38,7 +38,7 @@ class AuthController {
         }
     }
 
-    async login(request: express.Request, responce: express.Response) {
+    async login(request: express.Request, response: express.Response) {
         try {
 
         } catch (error) {
@@ -46,11 +46,16 @@ class AuthController {
         }
     }
 
-    async getUsers(request: express.Request, responce: express.Response) {
+    async getUsers(request: express.Request, response: express.Response) {
         try {
+            const users: User[] = await UserModel.find()
 
+            return response.json(users)
         } catch (error) {
+            const errorMessage = error instanceof Error ? error.message : "Невідома помилка.";
+            console.log(errorMessage);
 
+            return response.status(500).json(message(errorMessage));
         }
     }
 }
