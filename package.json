@@ -10,14 +10,17 @@
     }
   },
   "scripts": {
-    "dev": "npx nodemon",
+    "nodemon": "npx nodemon",
     "build": "rimraf ./build && npx tsc",
     "start": "npm run build && node build/main",
     "lint": "npx eslint ./src",
-    "format": "npx eslint ./src --fix"
+    "format": "npx eslint ./src --fix",
+    "server": "npx nodemon",
+    "client": "npm run dev --prefix client",
+    "dev": "cross-env NODE_ENV=development concurrently \"npm run server\" \"npm run client\""
   },
   "keywords": [],
-  "author": "",
+  "author": "Anokhin",
   "license": "ISC",
   "devDependencies": {
     "@types/bcrypt": "^5.0.0",
@@ -28,6 +31,8 @@
     "@types/node": "^18.14.0",
     "@typescript-eslint/eslint-plugin": "^5.52.0",
     "@typescript-eslint/parser": "^5.52.0",
+    "concurrently": "^7.6.0",
+    "cross-env": "^7.0.3",
     "eslint": "^8.34.0",
     "husky": "^8.0.3",
     "nodemon": "^2.0.20",
@@ -42,6 +47,7 @@
     "dotenv": "^16.0.3",
     "express": "^4.18.2",
     "jsonwebtoken": "^9.0.0",
-    "mongoose": "^6.10.0"
+    "mongoose": "^6.10.0",
+    "react-materialize": "^3.10.0"
   }
 }
