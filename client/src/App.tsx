@@ -8,18 +8,19 @@ import { useAuth } from "./hooks/auth.hook";
 import useAppSelector from "./hooks/reduxHooks/useAppSelector.hook";
 
 function App() {
-  const routes = useRoutesHook("ADMIN");
+  const user = useAppSelector(state => state.user);
+  const routes = useRoutesHook(user.role);
   const {login, logout} = useAuth();
-  const token = useAppSelector(state => state.token);
+  const token = useAppSelector(state => state.token.accessToken);
   useEffect(() => {M.AutoInit();}, []);
 
   return (
     <AuthContext.Provider value={{login, logout}}>
-      {token && <NavBar />}
+      {!!token && <NavBar />}
       <div className="container">
         {routes}
       </div>
-      {token && <Footer />}
+      {!!token && <Footer />}
     </AuthContext.Provider>
   );
 }

@@ -1,7 +1,7 @@
 import React from "react";
 import {NavLink} from "react-router-dom";
 
-const UseLinksHook = (role: string) => {
+const UseLinksHook = (role: string | null | undefined) => {
   switch (role) {
     case "ADMIN":
       return(

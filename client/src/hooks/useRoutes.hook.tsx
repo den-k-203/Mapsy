@@ -5,7 +5,7 @@ import AdminPage from "../pages/AdminPage";
 import RegistrationPage from "../pages/RegistrationPage";
 import LoginPage from "../pages/LoginPage";
 
-const useRoutesHook = (role: string) => {
+const useRoutesHook = (role: string | null | undefined) => {
   switch (role) {
     case "ADMIN":
       return(

@@ -1,8 +1,20 @@
-import React from "react";
+import React, { useContext } from "react";
 import useLinksHook from "../hooks/useLinks.hook";
+import useAppSelector from "../hooks/reduxHooks/useAppSelector.hook";
+import { NavLink } from "react-router-dom";
+import { AuthContext } from "../context/authContext";
+
 
 const NavBar = () => {
-  const links = useLinksHook("ADMIN");
+  const auth = useContext(AuthContext);
+  const user = useAppSelector(state => state.user);
+  const links = useLinksHook(user.role);
+
+  const logoutHandler = () => {
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-ignore
+    auth.logout();
+  };
   return (
     <div>
       <nav>
@@ -19,6 +31,7 @@ const NavBar = () => {
           </a>
           <ul id="nav-mobile" className="right hide-on-med-and-down">
             {links}
+            <li><NavLink to="/auth" onClick={logoutHandler}>Вихід</NavLink></li>
           </ul>
         </div>
       </nav>

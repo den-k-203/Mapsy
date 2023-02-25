@@ -41,7 +41,7 @@ class AuthController {
 
             //(RFC5322) regex
             const user: User | null = await UserModel.findOne(logIdent.includes("@")? {email: logIdent} : {login: logIdent});
-            if(!user) return response.status(400).json(message(`Такого ${logIdent} не існує.`));
+            if(!user) return response.status(400).json(message(`Такого користувача ${logIdent} не існує.`));
             
             const validationPass: boolean = await bcrypt.compare(password, user.password);
             if(!validationPass) return response.status(400).json(message("Введений невірний пароль"));

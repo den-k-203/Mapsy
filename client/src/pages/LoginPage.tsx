@@ -1,6 +1,40 @@
-import React from "react";
+import React, { useContext, useEffect, useState } from "react";
+import { AuthContext } from "../context/authContext";
+import { useNavigate } from "react-router-dom";
+import { useMessage } from "../hooks/useMessage.hook";
+import { useHttp } from "../hooks/http.hook";
 
 const LoginPage = () => {
+  const auth = useContext(AuthContext);
+  const message = useMessage();
+  const navigate = useNavigate();
+  const {loading, request, error, clearError} = useHttp();
+  const [form, setForm] = useState({
+    logIdent: "",
+    password: ""
+  });
+
+  useEffect(() => {
+    if (error != null) {
+      message(error);
+    }
+    clearError();
+  },[error, message, clearError]);
+
+  const changeHandler = (event: any) => {
+    setForm({...form, [event.target.name]: event.target.value});
+  };
+
+  const loginHandler = async () => {
+    try {
+      const response = await request("http://localhost:5000/api/auth/login", "POST", {...form});
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-ignore
+      auth.login(response.token, response.user);
+      message(response.message);
+    } catch (e) {}
+  };
+
   return (
     <div>
       <h1 style={{color: "#E1E1E1"}}>
@@ -16,18 +50,43 @@ const LoginPage = () => {
         <form className="col center-align s12">
           <div className="row">
             <div className="input-field col s8">
-              <input id="first_name" type="text" className="validate" />
-              <label htmlFor="first_name">First Name</label>
+              <input
+                id="logIdent"
+                name="logIdent"
+                type="text"
+                className="validate"
+                onChange={changeHandler}
+              />
+              <label htmlFor="logIdent">Логін або пошта</label>
             </div>
             <div className="input-field col s8">
-              <input id="last_name" type="text" className="validate" />
-              <label htmlFor="last_name">Last Name</label>
+              <input
+                id="password"
+                name="password"
+                type="password"
+                className="validate"
+                onChange={changeHandler}
+              />
+              <label htmlFor="password">Пароль</label>
             </div>
           </div>
-          <button className="btn waves-effect waves-light" type="submit" name="action" style={{marginRight:15}}>
+          <button
+            className="btn waves-effect waves-light"
+            type="submit"
+            name="action"
+            style={{marginRight:15}}
+            onClick={loginHandler}
+            disabled={loading}
+          >
             Вхід
           </button>
-          <button className="btn waves-effect waves-light" type="submit" name="action">
+          <button
+            className="btn waves-effect waves-light"
+            type="submit"
+            name="action"
+            onClick={() => navigate("/registration")}
+            disabled={loading}
+          >
             Реєстрація
             <i className="material-icons right">send</i>
           </button>

@@ -23,8 +23,9 @@ export const useAuth = () => {
   },[]);
 
   const logout = useCallback(() => {
-    dispatch(removeUser);
-    dispatch(removeToken);
+    console.log("logout");
+    dispatch(removeUser());
+    dispatch(removeToken());
     localStorage.removeItem(LOCALSTORAGE_NAME);
   }, []);
 

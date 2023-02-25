@@ -25,7 +25,13 @@ const dndSlice = createSlice({
       state.role = action.payload.role;
     },
     removeUser(state) {
-      state = initialState;
+      state._id = null;
+      state.email = null;
+      state.login = null;
+      state.firstName = null;
+      state.secondName = null;
+      state.password = null;
+      state.role =null;
     },
   },
 });

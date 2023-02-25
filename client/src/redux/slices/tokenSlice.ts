@@ -13,7 +13,7 @@ const dndSlice = createSlice({
       state.accessToken = action.payload.accessToken;
     },
     removeToken(state) {
-      state = initialState;
+      state.accessToken = null;
     },
   },
 });
