@@ -1,4 +1,5 @@
 import * as dotenv from "dotenv";
+import cors from "cors";
 import express from "express";
 import mongoose from "mongoose";
 import router from "./router/main.js";
@@ -10,6 +11,7 @@ const {DB_CONNECTION, PORT}: ProcessEnv = process.env;
 
 const app = express();
 
+app.use(cors())
 app.use(express.json());
 app.use("/api/auth", router);
 
