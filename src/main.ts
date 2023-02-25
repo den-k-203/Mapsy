@@ -10,7 +10,7 @@ const {DB_CONNECTION, PORT}: ProcessEnv = process.env;
 
 const app = express();
 
-app.use(express.json())
+app.use(express.json());
 app.use("/api/auth", router);
 
 const start = async () => {

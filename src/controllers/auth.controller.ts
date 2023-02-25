@@ -4,12 +4,9 @@ import bcrypt from "bcrypt";
 import UserModel from "../models/user.model.js";
 import RoleModel from "../models/role.model.js";
 
-import {User} from "../types/main.js";
-
+import TokenService from "../services/token.service.js";
+import {LoginData, User} from "../types/main.js";
 import {message} from "../utils/main.js";
-
-
-
 
 class AuthController {
     async registration(request: express.Request, response: express.Response) {
@@ -40,17 +37,31 @@ class AuthController {
 
     async login(request: express.Request, response: express.Response) {
         try {
+            const {logIdent, password}: LoginData = request.body;
 
+            //(RFC5322) regex
+            const user: User | null = await UserModel.findOne(logIdent.includes("@")? {email: logIdent} : {login: logIdent});
+            if(!user) return response.status(400).json(message(`Такого ${logIdent} не існує.`));
+            
+            const validationPass: boolean = await bcrypt.compare(password, user.password);
+            if(!validationPass) return response.status(400).json(message("Введений невірний пароль"));
+
+            const token = TokenService.generateAccessToken(user._id, user.role);
+
+            return response.status(200).json({token, user});
         } catch (error) {
+            const errorMessage = error instanceof Error ? error.message : "Невідома помилка.";
+            console.log(errorMessage);
 
+            return response.status(500).json(message(errorMessage));
         }
     }
 
     async getUsers(request: express.Request, response: express.Response) {
         try {
-            const users: User[] = await UserModel.find()
+            const users: User[] = await UserModel.find();
 
-            return response.json(users)
+            return response.json(users);
         } catch (error) {
             const errorMessage = error instanceof Error ? error.message : "Невідома помилка.";
             console.log(errorMessage);
