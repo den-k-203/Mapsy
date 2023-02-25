@@ -1,12 +1,12 @@
-import {Schema, model} from "mongoose"
+import {Schema, model} from "mongoose";
 
 const Role: Schema = new Schema({
     value:{
         type: String,
         require: true,
         unique: true,
-        default: 'USER'
+        default: "USER"
     }
-})
+});
 
-export default model('Role', Role)
+export default model("Role", Role);

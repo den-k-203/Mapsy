@@ -1,12 +1,12 @@
-import express from "express"
-import bcrypt from "bcrypt"
+import express from "express";
+import bcrypt from "bcrypt";
 
-import UserModel from "../models/user.model.js"
+import UserModel from "../models/user.model.js";
 import RoleModel from "../models/role.model.js";
 
 import {User} from "../types/main.js";
 
-import {message} from "../utils/main.js"
+import {message} from "../utils/main.js";
 
 
 
@@ -14,27 +14,27 @@ import {message} from "../utils/main.js"
 class AuthController {
     async registration(request: express.Request, response: express.Response) {
         try {
-            const {email, login, firstName, secondName, password, role}: User = request.body
+            const {email, login, firstName, secondName, password, role}: User = request.body;
 
-            const candidateEmail: User | null = await UserModel.findOne({email: email})
-            const candidateLogin: User | null = await UserModel.findOne({login: login})
+            const candidateEmail: User | null = await UserModel.findOne({email: email});
+            const candidateLogin: User | null = await UserModel.findOne({login: login});
 
             if(!candidateEmail || !candidateLogin) {
-                return response.status(400).json(message('Користувач з таким логіном або паролем вже створений.'))
+                return response.status(400).json(message("Користувач з таким логіном або паролем вже створений."));
             }
 
-            const hashPassword = await bcrypt.hash(password, 6)
-            const {value} = new RoleModel({value: role})
+            const hashPassword = await bcrypt.hash(password, 6);
+            const {value} = new RoleModel({value: role});
 
-            const user = new UserModel({email, login, firstName, secondName, password: hashPassword, role: value})
-            await user.save()
+            const user = new UserModel({email, login, firstName, secondName, password: hashPassword, role: value});
+            await user.save();
 
-            return response.status(200).json(message('Користувач створений!'))
+            return response.status(200).json(message("Користувач створений!"));
         } catch (error) {
-            const errorMessage = error instanceof Error ? error.message : 'Невідома помилка.'
-            console.log(errorMessage)
+            const errorMessage = error instanceof Error ? error.message : "Невідома помилка.";
+            console.log(errorMessage);
 
-            return response.status(500).json(message(errorMessage))
+            return response.status(500).json(message(errorMessage));
         }
     }
 
@@ -54,4 +54,4 @@ class AuthController {
         }
     }
 }
-export default new AuthController()
+export default new AuthController();
