@@ -7,15 +7,17 @@ import Footer from "./components/Footer";
 function App() {
   const routes = useRoutesHook("ADMIN");
 
-  useEffect(() => {M.AutoInit();},[]);
+  useEffect(() => {
+    M.AutoInit();
+  }, []);
 
   return (
     <div className="App">
-      <NavBar/>
+      <NavBar />
       <div className="container">
         {routes}
       </div>
-      <Footer/>
+      <Footer />
     </div>
   );
 }
