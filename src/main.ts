@@ -3,14 +3,14 @@ import express from "express"
 import mongoose from "mongoose"
 import router from "./router/main.js";
 
-import {ProcessEnv} from "./types/main.js";
+import {ProcessEnv} from "./interfaces/main.js";
 
 dotenv.config()
 const {DB_CONNECTION, PORT}: ProcessEnv = process.env
 
 const app = express()
 
-app.use('/', router)
+app.use('/api/auth', router)
 
 const start = async () => {
     try {
