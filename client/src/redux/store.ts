@@ -1,8 +1,13 @@
 import {configureStore} from "@reduxjs/toolkit";
+import userSlice from "./slices/userSlice";
+import tokenSlice from "./slices/tokenSlice";
 
 
 const store = configureStore({
-  reducer: {},
+  reducer: {
+    user: userSlice,
+    token: tokenSlice
+  },
   middleware: (getDefaultMiddleware) => getDefaultMiddleware({serializableCheck: false})
 });
 

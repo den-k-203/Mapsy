@@ -3,22 +3,24 @@ import M from "materialize-css";
 import { useEffect } from "react";
 import NavBar from "./components/NavBar";
 import Footer from "./components/Footer";
+import { AuthContext } from "./context/authContext";
+import { useAuth } from "./hooks/auth.hook";
+import useAppSelector from "./hooks/reduxHooks/useAppSelector.hook";
 
 function App() {
   const routes = useRoutesHook("ADMIN");
-
-  useEffect(() => {
-    M.AutoInit();
-  }, []);
+  const {login, logout} = useAuth();
+  const token = useAppSelector(state => state.token);
+  useEffect(() => {M.AutoInit();}, []);
 
   return (
-    <div className="App">
-      <NavBar />
+    <AuthContext.Provider value={{login, logout}}>
+      {token && <NavBar />}
       <div className="container">
         {routes}
       </div>
-      <Footer />
-    </div>
+      {token && <Footer />}
+    </AuthContext.Provider>
   );
 }
 
