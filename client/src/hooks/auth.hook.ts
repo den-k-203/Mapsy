@@ -1,7 +1,6 @@
 import { useCallback, useEffect } from "react";
 
 import useAppDispatch from "./reduxHooks/useAppDispatch.hook";
-// import useAppSelector from "./reduxHooks/useAppSelector.hook";
 
 import { Token, User } from "../types/main";
 
@@ -12,9 +11,6 @@ const LOCALSTORAGE_NAME = "User";
 
 export const useAuth = () => {
   const dispatch = useAppDispatch();
-
-  // const user: User = useAppSelector(state => state.user);
-  // const token: Token = useAppSelector(state => state.token);
 
   const login = useCallback((jwtToken: Token, user: User) => {
     dispatch(setUser({...user}));

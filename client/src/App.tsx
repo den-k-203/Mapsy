@@ -17,9 +17,7 @@ function App() {
   return (
     <AuthContext.Provider value={{login, logout}}>
       {!!token && <NavBar />}
-      <div className="container">
-        {routes}
-      </div>
+      {routes}
       {!!token && <Footer />}
     </AuthContext.Provider>
   );

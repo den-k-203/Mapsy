@@ -4,6 +4,7 @@ import HomePage from "../pages/HomePage";
 import AdminPage from "../pages/AdminPage";
 import RegistrationPage from "../pages/RegistrationPage";
 import LoginPage from "../pages/LoginPage";
+import MapPage from "../pages/MapPage";
 
 const useRoutesHook = (role: string | null | undefined) => {
   switch (role) {
@@ -12,6 +13,7 @@ const useRoutesHook = (role: string | null | undefined) => {
         <Routes>
           <Route path="/home" element={<HomePage/>}/>
           <Route path="/admin" element={<AdminPage/>}/>
+          <Route path="/map" element={<MapPage/>}/>
           <Route path="*" element={<Navigate to="/home" replace/>}/>
         </Routes>
       );
@@ -19,6 +21,7 @@ const useRoutesHook = (role: string | null | undefined) => {
       return(
         <Routes>
           <Route path="/home" element={<HomePage/>}/>
+          <Route path="/map" element={<MapPage/>}/>
           <Route path="*" element={<Navigate to="/home" replace/>}/>
         </Routes>
       );

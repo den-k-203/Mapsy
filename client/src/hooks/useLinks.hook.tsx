@@ -8,12 +8,14 @@ const UseLinksHook = (role: string | null | undefined) => {
         <>
           <li><NavLink to="/home">Головна</NavLink></li>
           <li><NavLink to="/admin">Адмін панель</NavLink></li>
+          <li><NavLink to="/map">Карта</NavLink></li>
         </>
       );
     case "USER":
       return(
         <>
           <li><NavLink to="/home">Головна</NavLink></li>
+          <li><NavLink to="/map">Карта</NavLink></li>
         </>
       );
     default:
