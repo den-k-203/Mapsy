@@ -2,7 +2,8 @@ import * as dotenv from "dotenv";
 import cors from "cors";
 import express from "express";
 import mongoose from "mongoose";
-import router from "./router/main.js";
+import authRouter from "./router/auth.router.js";
+import adminRouter from "./router/admin.router.js";
 
 import {ProcessEnv} from "./interfaces/main.js";
 
@@ -13,7 +14,8 @@ const app = express();
 
 app.use(cors());
 app.use(express.json());
-app.use("/api/auth", router);
+app.use("/api/auth", authRouter);
+app.use("/api/admin", adminRouter);
 
 const start = async () => {
     try {
