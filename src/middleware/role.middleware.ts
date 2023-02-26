@@ -2,12 +2,12 @@ import jwt, {JwtPayload} from "jsonwebtoken";
 import express from "express";
 import {message} from "../utils/main.js";
 
-type Payload = {
-    id: string,
-    role: string,
-    iat: number,
-    exp: number
-}
+// type Payload = {
+//     id: string,
+//     role: string,
+//     iat: number,
+//     exp: number
+// }
 
 export default function (roles: string) {
     return  function (request: express.Request, response: express.Response, next: express.NextFunction) {
