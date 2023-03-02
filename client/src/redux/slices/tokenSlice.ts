@@ -5,7 +5,7 @@ const initialState: Token = {
       accessToken: null
 };
 
-const dndSlice = createSlice({
+const tokenSlice = createSlice({
   name: "token",
   initialState,
   reducers: {
@@ -18,5 +18,5 @@ const dndSlice = createSlice({
   },
 });
 
-export const {setToken, removeToken} = dndSlice.actions;
-export default dndSlice.reducer;
+export const {setToken, removeToken} = tokenSlice.actions;
+export default tokenSlice.reducer;

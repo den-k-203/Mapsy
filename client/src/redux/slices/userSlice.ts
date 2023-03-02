@@ -11,7 +11,7 @@ const initialState: User = {
   role: null,
 };
 
-const dndSlice = createSlice({
+const userSlice = createSlice({
   name: "user",
   initialState,
   reducers: {
@@ -36,5 +36,5 @@ const dndSlice = createSlice({
   },
 });
 
-export const {setUser, removeUser} = dndSlice.actions;
-export default dndSlice.reducer;
+export const {setUser, removeUser} = userSlice.actions;
+export default userSlice.reducer;
