@@ -12,9 +12,9 @@ router.patch("/user", roleMiddleware("ADMIN"), adminController.updateUser);
 router.get("/user", roleMiddleware("ADMIN"), adminController.getUsers);
 router.delete("/user", roleMiddleware("ADMIN"), adminController.deleteUser);
 
-router.post("/destract-object", roleMiddleware("ADMIN"), validation, adminController.createDestractObject);
-router.patch("/destract-object", roleMiddleware("ADMIN"), adminController.updateDestractObject);
-router.get("/destract-object", roleMiddleware("ADMIN"), adminController.getDestractObjects);
-router.delete("/destract-object", roleMiddleware("ADMIN"), adminController.deleteDestractObject);
+router.post("/destract-object",  validation, adminController.createDestractObject);
+router.patch("/destract-object", validation, adminController.updateDestractObject);
+router.get("/destract-object", adminController.getDestractObjects);
+router.delete("/destract-object", adminController.deleteDestractObject);
 
 export default router;

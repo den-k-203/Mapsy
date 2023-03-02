@@ -19,3 +19,7 @@ export type LoginData = {
 export type AccessToken = {
     accessToken: string
 }
+
+export type IdDO = {
+    _id: string
+}
