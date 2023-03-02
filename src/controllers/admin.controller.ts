@@ -1,7 +1,10 @@
 import express from "express";
 import { validationResult } from "express-validator";
+
+import DestractObjectService from "../services/destractObject.service.js";
+
 import { message } from "../utils/main.js";
-import DestractObjectModel from "../models/destractObject.model.js";
+
 import { DestractObject } from "../interfaces/main.js";
 import { IdDO } from "../types/main.js";
 
@@ -43,15 +46,10 @@ class AdminController {
     try {
       const errors = validationResult(request);
       if (!errors.isEmpty()) {
-        return response.status(400).json({ message: "Помилка при вході", errors: errors.array() });
+        return response.status(400).json({ message: "Помилка введених даних", errors: errors.array() });
       }
-      const {
-        title, position, postName, address, type, area, imgPath, text, percentageOfDestruction, dateOfDestruction,
-      }: DestractObject = request.body;
-      const destractObject = new DestractObjectModel(
-        { title, position, postName, address, type, area, imgPath, text, percentageOfDestruction, dateOfDestruction },
-      );
-      await destractObject.save();
+      const values: DestractObject = request.body;
+      await DestractObjectService.createDO(values);
       return response.status(200).json(message("Об'єкт сворено"));
     } catch (error) {
       const errorMessage = error instanceof Error ? error.message : "Невідома помилка.";
@@ -62,37 +60,36 @@ class AdminController {
   // GET ALL
   async getDestractObjects(request: express.Request, response: express.Response) {
     try {
-      const destractObjects = await DestractObjectModel.find();
+      const destractObjects = await DestractObjectService.getAllDO();
       response.status(200).json(destractObjects);
     } catch (error) {
       const errorMessage = error instanceof Error ? error.message : "Невідома помилка.";
-      console.log(`Помилка отриманння об'єкту:${errorMessage}.`);
-      return response.status(500).json(message("Помилка отримання об'єкту."));
+      console.log(`Помилка отриманння масиву об'єктів. ${errorMessage}.`);
+      return response.status(500).json(message(`Помилка отриманння масиву об'єктів. ${errorMessage}.`));
     }
   }
   // UPDATE ONE
   async updateDestractObject(request: express.Request, response: express.Response) {
     try {
-      const {
-        _id, title, position, postName, address, type, area, imgPath, text, percentageOfDestruction, dateOfDestruction,
-      }: DestractObject = request.body;
-      await DestractObjectModel.findOneAndUpdate(
-        { _id },
-        { title, position, postName, address, type, area, imgPath, text, percentageOfDestruction, dateOfDestruction },
-      );
-      return response.status(200).json(message(`Дані об'єкта руйнації з id:${_id} оновлено.`));
+      const errors = validationResult(request);
+      if (!errors.isEmpty()) {
+        return response.status(400).json({ message: "Помилка введених даних", errors: errors.array() });
+      }
+      const values: DestractObject = request.body;
+      await DestractObjectService.updateOneDO(values);
+      return response.status(200).json(message("Дані об'єкта руйнації оновлено."));
     } catch (error) {
       const errorMessage = error instanceof Error ? error.message : "Невідома помилка.";
-      console.log(`Помилка оновлення об'єкту:${errorMessage}.`);
-      return response.status(500).json(message("Помилка оновлення об'єкту."));
+      console.log(`Помилка оновлення об'єкту. ${errorMessage}.`);
+      return response.status(500).json(message(`Помилка оновлення об'єкту. ${errorMessage}.`));
     }
   }
   // DELETE ONE
   async deleteDestractObject(request: express.Request, response: express.Response) {
     try {
       const { _id }: IdDO = request.body;
-      await DestractObjectModel.findOneAndDelete({_id});
-      return response.status(200).json(message(`Дані об'єкта руйнації з id:${_id} видалено.`));
+      await DestractObjectService.deleteOneDO({ _id });
+      return response.status(200).json(message(`Об'єкта руйнації з id:${_id} видалено.`));
     } catch (error) {
       const errorMessage = error instanceof Error ? error.message : "Невідома помилка.";
       console.log(`Помилка видалення об'єкту:${errorMessage}.`);
