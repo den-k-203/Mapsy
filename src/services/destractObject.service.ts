@@ -4,6 +4,7 @@ import { DestractObject } from "../interfaces/main.js";
 import { IdDO } from "../types/main.js";
 
 class DestractObjectService {
+  // create destract object
   async createDO(values: DestractObject) {
     try {
       const destractObject = new DestractObjectModel({ ...values });
@@ -13,7 +14,7 @@ class DestractObjectService {
       throw new Error(`Помилка створення об'єкта руйнації. ${message}`);
     }
   }
-
+  // get destract object list
   async getAllDO() {
     try {
       return await DestractObjectModel.find();
@@ -22,7 +23,7 @@ class DestractObjectService {
       throw new Error(`Помилка взяття масиву об'єктів з бази. ${message}`);
     }
   }
-
+  // update destract object
   async updateOneDO(values: DestractObject) {
     try {
       const _id = values._id;
@@ -37,7 +38,7 @@ class DestractObjectService {
       throw new Error(message);
     }
   }
-
+  // delete destract object
   async deleteOneDO(_id: IdDO) {
     try {
       const dbResponse = await DestractObjectModel.findOne({ _id });

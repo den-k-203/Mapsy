@@ -1,13 +1,16 @@
-import { LoginData, User, UserDTO } from "../types/main.js";
-import UserModel from "../models/user.model.js";
 import bcrypt from "bcrypt";
+
+import UserModel from "../models/user.model.js";
 import RoleModel from "../models/role.model.js";
-import { ProcessEnv } from "../interfaces/main.js";
-import { message } from "../utils/main.js";
+
 import TokenService from "./token.service.js";
 import UserDtoService from "./userDto.service.js";
 
+import { LoginData, User} from "../types/main.js";
+import { ProcessEnv } from "../interfaces/main.js";
+
 class UserService {
+  // registration user in db
   async registrationOneUser(values: User) {
     try {
       const { login, email, role, password, secondName, firstName } = values;
@@ -25,9 +28,10 @@ class UserService {
       const user = new UserModel({ email, login, firstName, secondName, password: hashPassword, role: value });
       await user.save();
     } catch (error) {
-      throw new Error(`Помилка створення користувача. ${error}`);
+      throw new Error(`Помилка реєстрації користувача. ${error}`);
     }
   }
+  // login user in app
   async loginOneUser(values: LoginData) {
     try {
       const {logIdent, password} = values;
@@ -39,32 +43,32 @@ class UserService {
       const userDto = UserDtoService.toUserDto(user);
       return { token, user: userDto };
     } catch (error) {
-      throw new Error(`Помилка створення користувача. ${error}`);
+      throw new Error(`Помилка логіну користувача. ${error}`);
     }
   }
-
+  // update user data
   async updateOneUser() {
     try {
 
     } catch (error) {
-      throw new Error(`Помилка створення користувача. ${error}`);
+      throw new Error(`Помилка оновлення даних користувача. ${error}`);
     }
   }
-
+  // get users
   async getAllUser() {
     try {
       const users: User[] = await UserModel.find();
       return users;
     } catch (error) {
-      throw new Error(`Помилка створення користувача. ${error}`);
+      throw new Error(`Помилка отримання списку користувача. ${error}`);
     }
   }
-
+  // delete user from db
   async deleteOneUser() {
     try {
 
     } catch (error) {
-      throw new Error(`Помилка створення користувача. ${error}`);
+      throw new Error(`Помилка видалення користувача. ${error}`);
     }
   }
 }
