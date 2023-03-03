@@ -6,7 +6,7 @@ import RoleModel from "../models/role.model.js";
 import TokenService from "./token.service.js";
 import UserDtoService from "./userDto.service.js";
 
-import { LoginData, User} from "../types/main.js";
+import { LoginData, User, UserDTO, UserId } from "../types/main.js";
 import { ProcessEnv } from "../interfaces/main.js";
 
 class UserService {
@@ -47,9 +47,12 @@ class UserService {
     }
   }
   // update user data
-  async updateOneUser() {
+  async updateOneUser(values: UserDTO) {
     try {
-
+      const user = await UserModel.findOne({_id: values._id});
+      if(!user) throw new Error("Такого корисутвача не існує");
+      delete values._id;
+      return await UserModel.updateOne({_id: user._id}, {...values});
     } catch (error) {
       throw new Error(`Помилка оновлення даних користувача. ${error}`);
     }
@@ -64,9 +67,11 @@ class UserService {
     }
   }
   // delete user from db
-  async deleteOneUser() {
+  async deleteOneUser({ _id }: UserId) {
     try {
-
+      const user = await UserModel.findOne({_id});
+      if(!user) throw new Error("Такого корисутвача не існує");
+      return await UserModel.deleteOne({_id} );
     } catch (error) {
       throw new Error(`Помилка видалення користувача. ${error}`);
     }

@@ -6,21 +6,13 @@ import DestractObjectService from "../services/destractObject.service.js";
 import { message } from "../utils/main.js";
 
 import { DestractObject } from "../interfaces/main.js";
-import { IdDO, User } from "../types/main.js";
+import { IdDO, User, UserDTO, UserId } from "../types/main.js";
 import UserService from "../services/user.service.js";
 
 class AdminController {
   // USERS
-  // ROUTES api/admin/user
-  async createUser(request: express.Request, response: express.Response) {
-    try {
-
-    } catch (error) {
-      const errorMessage = error instanceof Error ? error.message : "Невідома помилка.";
-      console.log(`Помилка створення користувача. ${errorMessage}.`);
-      return response.status(500).json(message("Помилка створення користувача."));
-    }
-  }
+  // ALL PATH  api/admin/user
+  // GET ALL
   async getUsers(request: express.Request, response: express.Response) {
     try {
       const users: User[] = await UserService.getAllUser();
@@ -31,26 +23,32 @@ class AdminController {
       return response.status(500).json(message("Помилка отримання списску користувачів."));
     }
   }
+  // UPDATE ONE
   async updateUser(request: express.Request, response: express.Response) {
     try {
-
+      const values: UserDTO = request.body;
+      await UserService.updateOneUser(values);
+      return response.status(200).json(message("Дані користувача оновлено"));
     } catch (error) {
       const errorMessage = error instanceof Error ? error.message : "Невідома помилка.";
       console.log(`Помилка оновлення даних користувача. ${errorMessage}.`);
       return response.status(500).json(message("Помилка оновлення даних користувача."));
     }
   }
+  // DELETE ONE
   async deleteUser(request: express.Request, response: express.Response) {
     try {
-
+      const {_id}: UserId = request.body;
+      await UserService.deleteOneUser({ _id });
+      return response.status(200).json(message(`Користувач з id:${_id} видалено.`));
     } catch (error) {
       const errorMessage = error instanceof Error ? error.message : "Невідома помилка.";
       console.log(`Помилка видалення користувача. ${errorMessage}.`);
       return response.status(500).json(message("Помилка видалення користувача."));
     }
   }
-  // CREATE ONE
   // ALL PATH api/admin/destract-object
+  // CREATE ONE
   async createDestractObject(request: express.Request, response: express.Response) {
     try {
       const errors = validationResult(request);

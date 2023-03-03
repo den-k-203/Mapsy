@@ -21,6 +21,10 @@ export type UserDTO = {
     role: string
 }
 
+export type UserId = {
+    _id: string
+}
+
 export type LoginData = {
     logIdent: string,
     password: string,
