@@ -1,16 +1,15 @@
 import React from "react";
 import NavBarContent from "../components/NavBarContent";
 
-const AdminPage = () => {
+const AdminUserPage = () => {
   return (
     <>
-      <NavBarContent/>
+      <NavBarContent />
       <div className={"container"}>
-        <h1 style={{ color: "#E1E1E1"}}>Admin Page</h1>
+        <h1 style={{ color: "#E1E1E1" }}>Admin user</h1>
       </div>
     </>
-
   );
 };
 
-export default AdminPage;
+export default AdminUserPage;
