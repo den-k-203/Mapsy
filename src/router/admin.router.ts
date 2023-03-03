@@ -17,7 +17,7 @@ router.delete("/user", roleMiddleware(ADMIN), adminController.deleteUser);
 // destract object routes
 router.post("/destract-object", roleMiddleware(ADMIN),  validation, adminController.createDestractObject);
 router.patch("/destract-object", roleMiddleware(ADMIN), validation, adminController.updateDestractObject);
-router.get("/destract-object", roleMiddleware(ADMIN), adminController.getDestractObjects);
+router.get("/destract-object", adminController.getDestractObjects);
 router.delete("/destract-object", roleMiddleware(ADMIN), adminController.deleteDestractObject);
 
 export default router;

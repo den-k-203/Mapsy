@@ -1,17 +1,18 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-const initialState: any = [];
+const initialState: any = {
+  DoList: []
+};
 
 const destractObjectSlice = createSlice({
   name: "destractObjects",
   initialState,
   reducers: {
     setDestractObjects(state, action) {
-      state.push(...action.payload);
-      console.log(state);
+      state.DoList = [...action.payload];
     },
     removeDestractObjects(state) {
-      state = initialState;
+      state.DoList = initialState.DoList;
     },
   },
 });

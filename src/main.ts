@@ -6,6 +6,7 @@ import authRouter from "./router/auth.router.js";
 import adminRouter from "./router/admin.router.js";
 
 import {ProcessEnv} from "./interfaces/main.js";
+import roleRouter from "./router/role.router.js";
 
 dotenv.config();
 const {DB_CONNECTION, PORT}: ProcessEnv = process.env;
@@ -16,6 +17,7 @@ app.use(cors());
 app.use(express.json());
 app.use("/api/auth", authRouter);
 app.use("/api/admin", adminRouter);
+app.use("/api/role", roleRouter);
 
 const start = async () => {
     try {

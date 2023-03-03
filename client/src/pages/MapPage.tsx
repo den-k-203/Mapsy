@@ -26,11 +26,9 @@ const MapPage = () => {
   const dispatch = useAppDispatch();
   const {request} = useHttp();
 
-  const markers: Marker[] = useAppSelector(state => state.destractObject);
+  const markers: Marker[] = useAppSelector(state => state.destractObject.DoList);
   const token = useAppSelector(state => state.token.accessToken);
-
-  console.log("MARKERS - " ,markers);
-
+  
   const loadDataHandler = async () => {
     const data = await request(
       "http://localhost:5000/api/admin/destract-object",
@@ -49,7 +47,7 @@ const MapPage = () => {
 
       <MapContainer style={{ height: "90vh", width: "98.82vw" }} center={[50.4299, 30.5423]} zoom={13} scrollWheelZoom={true}>
         <TileLayer attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors' url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
-        {markers.map(item =>  {return(<MarkerItem item={item}/>);})}
+        {markers.map((item, index) =>  {return(<MarkerItem key={index} item={item}/>);})}
       </MapContainer>
     </>
   );

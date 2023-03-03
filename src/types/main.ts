@@ -36,3 +36,7 @@ export type AccessToken = {
 export type IdDO = {
     _id: string
 }
+
+export type Role = {
+    value: string
+}
