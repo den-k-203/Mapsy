@@ -13,10 +13,6 @@ function App() {
   const { login, logout } = useAuth();
   const token = useAppSelector(state => state.token.accessToken);
 
-  useEffect(() => {
-    M.AutoInit();
-  }, []);
-
   return (
     <AuthContext.Provider value={{ login, logout }}>
       {!!token && <NavBar />}
