@@ -53,7 +53,8 @@ class UserService {
 
   async getAllUser() {
     try {
-
+      const users: User[] = await UserModel.find();
+      return users;
     } catch (error) {
       throw new Error(`Помилка створення користувача. ${error}`);
     }
