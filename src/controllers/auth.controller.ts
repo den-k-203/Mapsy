@@ -16,7 +16,6 @@ class AuthController {
             return response.status(500).json(message(errorMessage));
         }
     }
-
     async login(request: express.Request, response: express.Response) {
         try {
             const loginData: LoginData = request.body;
