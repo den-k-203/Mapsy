@@ -3,12 +3,21 @@ export type Message = {
 }
 
 export type User = {
-    _id?: string,
+    _id?: string | undefined,
     email: string,
     login: string,
     firstName: string,
     secondName: string,
     password: string,
+    role: string
+}
+
+export type UserDTO = {
+    _id?: string | undefined,
+    email: string,
+    login: string,
+    firstName: string,
+    secondName: string,
     role: string
 }
 

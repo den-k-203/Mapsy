@@ -12,32 +12,41 @@ class AdminController {
   async createUser(request: express.Request, response: express.Response) {
     try {
 
-    } catch (e) {
-
+    } catch (error) {
+      const errorMessage = error instanceof Error ? error.message : "Невідома помилка.";
+      console.log(`Помилка створення користувача. ${errorMessage}.`);
+      return response.status(500).json(message("Помилка створення користувача."));
     }
+
   }
 
   async getUsers(request: express.Request, response: express.Response) {
     try {
 
-    } catch (e) {
-
+    } catch (error) {
+      const errorMessage = error instanceof Error ? error.message : "Невідома помилка.";
+      console.log(`Помилка отримання списску користувачів. ${errorMessage}.`);
+      return response.status(500).json(message("Помилка отримання списску користувачів."));
     }
   }
 
   async updateUser(request: express.Request, response: express.Response) {
     try {
 
-    } catch (e) {
-
+    } catch (error) {
+      const errorMessage = error instanceof Error ? error.message : "Невідома помилка.";
+      console.log(`Помилка оновлення даних користувача. ${errorMessage}.`);
+      return response.status(500).json(message("Помилка оновлення даних користувача."));
     }
   }
 
   async deleteUser(request: express.Request, response: express.Response) {
     try {
 
-    } catch (e) {
-
+    } catch (error) {
+      const errorMessage = error instanceof Error ? error.message : "Невідома помилка.";
+      console.log(`Помилка видалення користувача. ${errorMessage}.`);
+      return response.status(500).json(message("Помилка видалення користувача."));
     }
   }
   // CREATE ONE
