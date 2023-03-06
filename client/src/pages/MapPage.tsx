@@ -6,7 +6,7 @@ import useAppSelector from "../hooks/reduxHooks/useAppSelector.hook";
 import useAppDispatch from "../hooks/reduxHooks/useAppDispatch.hook";
 import { useHttp } from "../hooks/http.hook";
 import { setDestractObjects } from "../redux/slices/destractObjectSlice";
-import MarkerItem from "../components/MarkerItem";
+import ModalItem from "../components/Modal/ModalItem";
 
 interface Marker {
   title: string,
@@ -47,7 +47,7 @@ const MapPage = () => {
 
       <MapContainer style={{ height: "90vh", width: "98.82vw" }} center={[50.4299, 30.5423]} zoom={13} scrollWheelZoom={true}>
         <TileLayer attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors' url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
-        {markers.map((item, index) =>  {return(<MarkerItem key={index} item={item}/>);})}
+        {markers.map((item, index) =>  {return(<ModalItem key={index} item={item}/>);})}
       </MapContainer>
     </>
   );

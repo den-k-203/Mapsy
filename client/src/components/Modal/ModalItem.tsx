@@ -1,7 +1,7 @@
 import React from "react";
 import { Marker, Popup } from "react-leaflet";
 
-const MarkerItem = ({item}:any) => {
+const ModalItem = ({item}:any) => {
   return (
     <Marker position={item.position}>
       <Popup>
@@ -18,4 +18,4 @@ const MarkerItem = ({item}:any) => {
   );
 };
 
-export default MarkerItem;
+export default ModalItem;
