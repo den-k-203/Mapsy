@@ -2,12 +2,12 @@ import React, { useEffect, useState } from "react";
 import NavBarContent from "../components/NavBarContent";
 import EmptyTable from "../components/Tables/EmptyTable";
 import useAppSelector from "../hooks/reduxHooks/useAppSelector.hook";
-import Table from "../components/Tables/Table";
+import DOTable from "../components/Tables/DOTable";
 import { setDestractObjects } from "../redux/slices/destractObjectSlice";
 import { useHttp } from "../hooks/http.hook";
 import { useMessage } from "../hooks/useMessage.hook";
 import useAppDispatch from "../hooks/reduxHooks/useAppDispatch.hook";
-import Search from "../components/Search";
+import DOSearch from "../components/DOSearch";
 import CreateModal from "../components/Modal/CreateModal";
 
 const AdminDOPage = () => {
@@ -62,8 +62,8 @@ const AdminDOPage = () => {
           return DO.type.toLowerCase().indexOf(query.toLowerCase()) !== -1;
         case "area":
           return DO.area.toLowerCase().indexOf(query.toLowerCase()) !== -1;
-        case "text":
-          return DO.text.toLowerCase().indexOf(query.toLowerCase()) !== -1;
+        case "title":
+          return DO.title.toLowerCase().indexOf(query.toLowerCase()) !== -1;
         case "percentageOfDestruction":
           return DO.percentageOfDestruction.toLowerCase().indexOf(query.toLowerCase()) !== -1;
         case "dateOfDestruction":
@@ -81,16 +81,16 @@ const AdminDOPage = () => {
     <div>
       <NavBarContent />
       <div className={"container"}>
-        <h3 className={"center-align"} style={{ color: "#E1E1E1" }}>Редагування об'єктів руйнації</h3>
+        <h3 className={"center-align"} style={{ color: "#E1E1E1" }}>Редагування записів об'єктів руйнації</h3>
         <div className={"row"}>
           <div className="input-field col s4">
             <button className={"btn purple darken-1"} disabled={loading} onClick={loadDataHandler}>Оновити таблицю</button>
             <button className={"btn purple darken-1 modal-trigger"} data-target={"create-modal"}  disabled={loading} style={{marginTop: 10}}>Створити новий об'єкт</button>
             <CreateModal modal={"create-modal"}/>
           </div>
-          <Search search={search} selectOnChangeHandle={selectOnChangeHandle} select={select} searchOnChangeHandler={searchOnChangeHandler}/>
+          <DOSearch search={search} selectOnChangeHandle={selectOnChangeHandle} select={select} searchOnChangeHandler={searchOnChangeHandler}/>
         </div>
-        {filteredData.length > 0? <Table loading={loading} destractObjects={destractObjects}/> :<EmptyTable/>}
+        {filteredData.length > 0? <DOTable loading={loading} destractObjects={destractObjects}/> :<EmptyTable/>}
       </div>
     </div>
   );

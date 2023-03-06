@@ -1,6 +1,6 @@
 import React from "react";
 
-const Search = ({select, selectOnChangeHandle, search, searchOnChangeHandler}:any) => {
+const DOSearch = ({select, selectOnChangeHandle, search, searchOnChangeHandler}:any) => {
   return (
     <div className={"col s8"}>
       <div className="input-field col s7">
@@ -21,4 +21,4 @@ const Search = ({select, selectOnChangeHandle, search, searchOnChangeHandler}:an
   );
 };
 
-export default Search;
+export default DOSearch;

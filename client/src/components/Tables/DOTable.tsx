@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import M from "materialize-css";
 import Modal from "../Modal/Modal";
 
-const Table = ({ destractObjects, loading }: any) => {
+const DOTable = ({ destractObjects, loading }: any) => {
 
   useEffect(() => {
     M.AutoInit();
@@ -45,4 +45,4 @@ const Table = ({ destractObjects, loading }: any) => {
   );
 };
 
-export default Table;
+export default DOTable;

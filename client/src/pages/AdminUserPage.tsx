@@ -1,14 +1,73 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import NavBarContent from "../components/NavBarContent";
 import CreateModal from "../components/Modal/CreateModal";
-import Search from "../components/Search";
-import Table from "../components/Tables/Table";
 import EmptyTable from "../components/Tables/EmptyTable";
 import { useHttp } from "../hooks/http.hook";
+import useAppSelector from "../hooks/reduxHooks/useAppSelector.hook";
+import useAppDispatch from "../hooks/reduxHooks/useAppDispatch.hook";
+import { useMessage } from "../hooks/useMessage.hook";
+import { setUsers } from "../redux/slices/usersSlice";
+import UsersTable from "../components/Tables/UsersTable";
+import UsersSearch from "../components/UsersSearch";
 
 const AdminUserPage = () => {
-  const {loading, request, clearError, error} = useHttp();
-  const loadDataHandler = () => {return 0;};
+  const users = useAppSelector(state => state.users.users);
+  const token = useAppSelector(state => state.token.accessToken);
+
+  const dispatch = useAppDispatch();
+  const message = useMessage();
+  const {loading, clearError, error, request} = useHttp();
+
+  useEffect(() => {
+    message(error);
+    clearError();
+  }, [error, clearError, loading]);
+
+  useEffect(() => {
+    if(users.length === 0) {
+      loadDataHandler();
+    }
+  },[]);
+
+  const loadDataHandler = async () => {
+    const data = await request(
+      "http://localhost:5000/api/admin/user",
+      "GET",
+      null,
+      { "Authorization": `Bearer ${token}` },
+    );
+    dispatch(setUsers(data));
+  };
+
+  const [select, setSelect] = useState<string>("");
+  const selectOnChangeHandle = (event:any) => {setSelect(event.target.value);};
+
+  const [search, setSearch] = useState<string>("");
+  const [filteredData, setFilterDataFrom] = useState(users);
+  const searchOnChangeHandler = (event: any) => {
+    const query = event.target.value;
+    setSearch(query);
+    let updateForm = [...users];
+    updateForm = updateForm.filter((user) => {
+      switch (select) {
+        case "_id":
+          return user._id.toLowerCase().indexOf(query.toLowerCase()) !== -1;
+        case "email":
+          return user.email.toLowerCase().indexOf(query.toLowerCase()) !== -1;
+        case "login":
+          return user.login.toLowerCase().indexOf(query.toLowerCase()) !== -1;
+        case "firstName":
+          return user.firstName.toLowerCase().indexOf(query.toLowerCase()) !== -1;
+        case "secondName":
+          return user.secondName.toLowerCase().indexOf(query.toLowerCase()) !== -1;
+        case "role":
+          return user.role.toLowerCase().indexOf(query.toLowerCase()) !== -1;
+        default:
+          return user.login.toLowerCase().indexOf(query.toLowerCase()) !== -1;
+      }
+    });
+    setFilterDataFrom(updateForm);
+  };
   return (
     <div>
       <NavBarContent />
@@ -20,10 +79,9 @@ const AdminUserPage = () => {
             <button className={"btn purple darken-1 modal-trigger"} data-target={"create-modal"}  disabled={loading} style={{marginTop: 10}}>Створити новий об'єкт</button>
             <CreateModal modal={"create-modal"}/>
           </div>
-          {/*<Search search={search} selectOnChangeHandle={selectOnChangeHandle} select={select} searchOnChangeHandler={searchOnChangeHandler}/>*/}
+          <UsersSearch search={search} selectOnChangeHandle={selectOnChangeHandle} select={select} searchOnChangeHandler={searchOnChangeHandler}/>
         </div>
-        <EmptyTable/>
-        {/*{filteredData.length > 0? <Table loading={loading} destractObjects={destractObjects}/> :<EmptyTable/>}*/}
+        {filteredData.length > 0? <UsersTable loading={loading} users={users}/> :<EmptyTable/>}
       </div>
     </div>
   );
