@@ -6,7 +6,6 @@ const NavBarContent = () => {
     <nav>
       <div className="nav-wrapper" style={{ background: "#1F1F1F" }}>
         <ul id="nav-mobile" className="left hide-on-med-and-down" style={{paddingLeft: 150}}>
-          <li className={""}><NavLink to={"/admin/main"}>Основна</NavLink></li>
           <li className={""}><NavLink to={"/admin/destract-object"}>Об'єкти руйнації</NavLink></li>
           <li className={""}><NavLink to={"/admin/users"}>Користувачі</NavLink></li>
         </ul>

@@ -98,23 +98,17 @@ const MapPage = () => {
     <>
       <div className={"row"} style={{ marginTop: 5, marginBottom: 0 }}>
         <div className={"col s7 left-align"} style={{ marginTop: "2%" }}>
-          <button disabled={loading} className={"btn purple darken-1"} onClick={loadDataHandler}>
-            Оновити
-          </button>
+          <button disabled={loading} className={"btn purple darken-1"} onClick={loadDataHandler}>Оновити</button>
         </div>
         <div className={"col s5"}>
-          <DOSearch search={search} selectOnChangeHandle={selectOnChangeHandle} select={select}
-                    searchOnChangeHandler={searchOnChangeHandler} />
+          <DOSearch search={search} selectOnChangeHandle={selectOnChangeHandle} select={select} searchOnChangeHandler={searchOnChangeHandler} />
         </div>
       </div>
 
       <div className="row">
         <div className="col s8">
-          <MapContainer style={{ height: "70vh", width: "65vw" }} center={[50.4299, 30.5423]} zoom={13}
-                        scrollWheelZoom={true}>
-            <TileLayer
-              attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-              url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
+          <MapContainer style={{ height: "70vh", width: "65vw" }} center={[50.4299, 30.5423]} zoom={13} scrollWheelZoom={true}>
+            <TileLayer attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors' url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
             {filterMarkers.length !== 0 && filterMarkers.map((item, index) => {
               return (<ModalItem key={index} item={item} setItem={setThisItem} />);
             })}

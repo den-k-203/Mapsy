@@ -7,7 +7,7 @@ const UseLinksHook = (role: string | null | undefined) => {
       return(
         <>
           <li><NavLink to="/home">Головна</NavLink></li>
-          <li><NavLink to="/admin/main">Адмін панель</NavLink></li>
+          <li><NavLink to="/admin/destract-object">Адмін панель</NavLink></li>
           <li><NavLink to="/map">Карта</NavLink></li>
         </>
       );

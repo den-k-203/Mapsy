@@ -20,7 +20,7 @@ const UsersTable = ({ loading }: any) => {
           <th className={"center-align"}>Пошта</th>
           <th className={"center-align"}>Логін</th>
           <th className={"center-align"}>Роль</th>
-          <th className={"center-align"}>Дії</th>
+          {/*<th className={"center-align"}>Дії</th>*/}
         </tr>
         </thead>
         <tbody>
@@ -33,11 +33,11 @@ const UsersTable = ({ loading }: any) => {
               <td className={"center-align"}>{user.email}</td>
               <td className={"center-align"}>{user.login}</td>
               <td className={"center-align"}>{user.role}</td>
-              <td className={"center-align"}>
-                <button disabled={loading} className={"btn purple darken-1"}>
-                  <span>Редагувати</span>
-                </button>
-              </td>
+              {/*<td className={"center-align"}>*/}
+              {/*  <button disabled={loading} className={"btn purple darken-1"}>*/}
+              {/*    <span>Редагувати</span>*/}
+              {/*  </button>*/}
+              {/*</td>*/}
             </tr>
           );
         })}

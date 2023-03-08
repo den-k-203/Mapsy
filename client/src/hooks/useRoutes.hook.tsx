@@ -1,7 +1,6 @@
 import React from "react";
 import { Navigate, Route, Routes } from "react-router-dom";
 import HomePage from "../pages/HomePage";
-import AdminPage from "../pages/AdminPage";
 import RegistrationPage from "../pages/RegistrationPage";
 import LoginPage from "../pages/LoginPage";
 import MapPage from "../pages/MapPage";
@@ -14,7 +13,6 @@ const useRoutesHook = (role: string | null | undefined) => {
       return(
         <Routes>
           <Route path="/home" element={<HomePage/>}/>
-          <Route path="/admin/main" element={<AdminPage/>}/>
           <Route path="/admin/users" element={<AdminUserPage/>}/>
           <Route path="/admin/destract-object" element={<AdminDOPage/>}/>
           <Route path="/map" element={<MapPage/>}/>
