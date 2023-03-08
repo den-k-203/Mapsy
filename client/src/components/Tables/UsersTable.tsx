@@ -1,8 +1,10 @@
 import React, { useEffect } from "react";
 import M from "materialize-css";
-import Modal from "../Modal/Modal";
+import useAppSelector from "../../hooks/reduxHooks/useAppSelector.hook";
 
-const UsersTable = ({users, loading }:any) => {
+const UsersTable = ({ loading }: any) => {
+  const users = useAppSelector(state => state.users.filtersUsers);
+
   useEffect(() => {
     M.AutoInit();
   }, []);

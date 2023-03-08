@@ -1,12 +1,11 @@
 import React, { useEffect } from "react";
 import M from "materialize-css";
 import Modal from "../Modal/Modal";
+import useAppSelector from "../../hooks/reduxHooks/useAppSelector.hook";
 
-const DOTable = ({ destractObjects, loading }: any) => {
-
-  useEffect(() => {
-    M.AutoInit();
-  }, []);
+const DOTable = ({loading }: any) => {
+  const destractObjects = useAppSelector(state => state.destractObject.filterDoList);
+  useEffect(() => {M.AutoInit();}, []);
 
   return (
     <div className="row">
@@ -18,7 +17,7 @@ const DOTable = ({ destractObjects, loading }: any) => {
           <th className={"center-align"}>Поштовий індекс</th>
           <th className={"center-align"}>Адреса</th>
           <th className={"center-align"}>...</th>
-          <th className={"center-align"}>Інформація</th>
+          <th className={"center-align"}>Дії</th>
         </tr>
         </thead>
         <tbody>
@@ -32,7 +31,7 @@ const DOTable = ({ destractObjects, loading }: any) => {
               <td className={"center-align"}>...</td>
               <td className={"center-align"}>
                 <button data-target={"modal" + index} disabled={loading} className={"btn modal-trigger purple darken-1"}>
-                  <span>Повна інформація</span>
+                  <span>Інформація</span>
                 </button>
                 <Modal item={item} index={index} />
               </td>

@@ -1,7 +1,8 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState: any = {
-  DoList: []
+  DoList: [],
+  filterDoList: []
 };
 
 const destractObjectSlice = createSlice({
@@ -25,8 +26,15 @@ const destractObjectSlice = createSlice({
     removeOneDestractObject(state,action) {
       state.DoList.filter((item:any) => item._id !== action.payload._id);
     },
+    setFilterDestractObjects(state, action) {
+      state.filterDoList = [...action.payload];
+    },
+    removeFilterDestractObjects(state) {
+      state.DoList = initialState.DoList;
+      state.filterDoList = initialState.filterDoList;
+    },
   },
 });
 
-export const {setDestractObjects,updateOneDestractObject, removeDestractObjects, removeOneDestractObject} = destractObjectSlice.actions;
+export const {setDestractObjects,updateOneDestractObject, removeDestractObjects, removeOneDestractObject, setFilterDestractObjects, removeFilterDestractObjects} = destractObjectSlice.actions;
 export default destractObjectSlice.reducer;

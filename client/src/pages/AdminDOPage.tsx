@@ -3,7 +3,7 @@ import NavBarContent from "../components/NavBarContent";
 import EmptyTable from "../components/Tables/EmptyTable";
 import useAppSelector from "../hooks/reduxHooks/useAppSelector.hook";
 import DOTable from "../components/Tables/DOTable";
-import { setDestractObjects } from "../redux/slices/destractObjectSlice";
+import { setDestractObjects, setFilterDestractObjects } from "../redux/slices/destractObjectSlice";
 import { useHttp } from "../hooks/http.hook";
 import { useMessage } from "../hooks/useMessage.hook";
 import useAppDispatch from "../hooks/reduxHooks/useAppDispatch.hook";
@@ -12,11 +12,15 @@ import CreateModal from "../components/Modal/CreateModal";
 
 const AdminDOPage = () => {
   const destractObjects = useAppSelector(state => state.destractObject.DoList);
+  const filterDO = useAppSelector(state => state.destractObject.filterDoList);
   const token = useAppSelector(state => state.token.accessToken);
 
   const dispatch = useAppDispatch();
   const message = useMessage();
-  const {loading, clearError, error, request} = useHttp();
+  const { loading, clearError, error, request } = useHttp();
+
+  const [select, setSelect] = useState<string>("");
+  const [search, setSearch] = useState<string>("");
 
   useEffect(() => {
     message(error);
@@ -24,26 +28,26 @@ const AdminDOPage = () => {
   }, [error, clearError, loading]);
 
   useEffect(() => {
-    if(destractObjects.length === 0) {
+    if (destractObjects.length === 0) {
       loadDataHandler();
     }
-  },[]);
+  }, []);
+
+  useEffect(() => {
+    if (filterDO.length === 0 && destractObjects.length !== 0) {
+      dispatch(setFilterDestractObjects(destractObjects));
+    }
+  }, [destractObjects]);
 
   const loadDataHandler = async () => {
-    const data = await request(
-      "http://localhost:5000/api/admin/destract-object",
-      "GET",
-      null,
-      { "Authorization": `Bearer ${token}` },
-    );
+    const data = await request("http://localhost:5000/api/admin/destract-object", "GET", null, { "Authorization": `Bearer ${token}` });
     dispatch(setDestractObjects(data));
   };
 
-  const [select, setSelect] = useState<string>("");
-  const selectOnChangeHandle = (event:any) => {setSelect(event.target.value);};
+  const selectOnChangeHandle = (event: any) => {
+    setSelect(event.target.value);
+  };
 
-  const [search, setSearch] = useState<string>("");
-  const [filteredData, setFilterDataFrom] = useState(destractObjects);
   const searchOnChangeHandler = (event: any) => {
     const query = event.target.value;
     setSearch(query);
@@ -74,7 +78,7 @@ const AdminDOPage = () => {
           return DO.type.toLowerCase().indexOf(query.toLowerCase()) !== -1;
       }
     });
-    setFilterDataFrom(updateForm);
+    dispatch(setFilterDestractObjects(updateForm));
   };
 
   return (
@@ -85,12 +89,13 @@ const AdminDOPage = () => {
         <div className={"row"}>
           <div className="input-field col s4">
             <button className={"btn purple darken-1"} disabled={loading} onClick={loadDataHandler}>Оновити таблицю</button>
-            <button className={"btn purple darken-1 modal-trigger"} data-target={"create-modal"}  disabled={loading} style={{marginTop: 10}}>Створити новий об'єкт</button>
-            <CreateModal modal={"create-modal"}/>
+            <button className={"btn purple darken-1 modal-trigger"} data-target={"create-modal"} disabled={loading} style={{ marginTop: 10 }}>Створити новий об'єкт
+            </button>
+            <CreateModal modal={"create-modal"} />
           </div>
-          <DOSearch search={search} selectOnChangeHandle={selectOnChangeHandle} select={select} searchOnChangeHandler={searchOnChangeHandler}/>
+          <DOSearch search={search} selectOnChangeHandle={selectOnChangeHandle} select={select} searchOnChangeHandler={searchOnChangeHandler} />
         </div>
-        {filteredData.length > 0? <DOTable loading={loading} destractObjects={destractObjects}/> :<EmptyTable/>}
+        {filterDO.length !== 0 ? (<DOTable loading={loading} />) : (<EmptyTable />)}
       </div>
     </div>
   );

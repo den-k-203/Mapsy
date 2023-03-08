@@ -6,36 +6,29 @@ import { useHttp } from "../hooks/http.hook";
 import useAppSelector from "../hooks/reduxHooks/useAppSelector.hook";
 import useAppDispatch from "../hooks/reduxHooks/useAppDispatch.hook";
 import { useMessage } from "../hooks/useMessage.hook";
-import { setUsers } from "../redux/slices/usersSlice";
+import { setFilterUsers, setUsers } from "../redux/slices/usersSlice";
 import UsersTable from "../components/Tables/UsersTable";
 import UsersSearch from "../components/UsersSearch";
 
 const AdminUserPage = () => {
   const users = useAppSelector(state => state.users.users);
+  const filterUsers = useAppSelector(state => state.users.filtersUsers);
   const token = useAppSelector(state => state.token.accessToken);
 
+  const {loading, clearError, error, request} = useHttp();
   const dispatch = useAppDispatch();
   const message = useMessage();
-  const {loading, clearError, error, request} = useHttp();
 
+  useEffect(() => {message(error);clearError();}, [error, clearError, loading]);
+  useEffect(() => {if(users.length === 0) {loadDataHandler();}},[]);
   useEffect(() => {
-    message(error);
-    clearError();
-  }, [error, clearError, loading]);
-
-  useEffect(() => {
-    if(users.length === 0) {
-      loadDataHandler();
+    if (filterUsers.length === 0 && users.length !== 0) {
+      dispatch(setFilterUsers(users));
     }
-  },[]);
+  }, [users]);
 
   const loadDataHandler = async () => {
-    const data = await request(
-      "http://localhost:5000/api/admin/user",
-      "GET",
-      null,
-      { "Authorization": `Bearer ${token}` },
-    );
+    const data = await request("http://localhost:5000/api/admin/user", "GET", null, { "Authorization": `Bearer ${token}` },);
     dispatch(setUsers(data));
   };
 
@@ -43,7 +36,6 @@ const AdminUserPage = () => {
   const selectOnChangeHandle = (event:any) => {setSelect(event.target.value);};
 
   const [search, setSearch] = useState<string>("");
-  const [filteredData, setFilterDataFrom] = useState(users);
   const searchOnChangeHandler = (event: any) => {
     const query = event.target.value;
     setSearch(query);
@@ -66,8 +58,9 @@ const AdminUserPage = () => {
           return user.login.toLowerCase().indexOf(query.toLowerCase()) !== -1;
       }
     });
-    setFilterDataFrom(updateForm);
+    dispatch(setFilterUsers(updateForm));
   };
+
   return (
     <div>
       <NavBarContent />
@@ -81,7 +74,7 @@ const AdminUserPage = () => {
           </div>
           <UsersSearch search={search} selectOnChangeHandle={selectOnChangeHandle} select={select} searchOnChangeHandler={searchOnChangeHandler}/>
         </div>
-        {filteredData.length > 0? <UsersTable loading={loading} users={users}/> :<EmptyTable/>}
+        {filterUsers.length !== 0? (<UsersTable loading={loading}/> ) : (<EmptyTable/>)}
       </div>
     </div>
   );
