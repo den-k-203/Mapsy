@@ -2,7 +2,7 @@ import React from "react";
 
 const DOSearch = ({select, selectOnChangeHandle, search, searchOnChangeHandler}:any) => {
   return (
-    <div className={"col s8"}>
+    <div>
       <div className="input-field col s7">
         <input id="search" name="search" type="text" className="validate" value={search} onChange={searchOnChangeHandler} />
         <label htmlFor="search">Пошук</label>

@@ -43,12 +43,11 @@ const ModalForm = ({ data, setData }: any) => {
           <label htmlFor="text" className="active">Опис</label>
         </div>
         <div className="input-field col s6">
-          <input id="firstPosition" name="firstPosition" type="text" className="validate" value={data.position[0]}
-                 onChange={changePosition0Handler} />
+          <input id="firstPosition" name="position" type="text" className="validate" value={data.position[0]} onChange={changePosition0Handler} />
           <label htmlFor="firstPosition" className="active">Х позиція</label>
         </div>
         <div className="input-field col s6">
-          <input id="secondPosition" data-length="120" name="secondPosition" type="text"
+          <input id="secondPosition" data-length="120" name="position" type="text"
                  className="validate materialize-textarea" value={data.position[1]} onChange={changePosition1Handler} />
           <label htmlFor="secondPosition" className="active">Y позиція</label>
         </div>

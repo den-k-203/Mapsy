@@ -69,7 +69,6 @@ const AdminUserPage = () => {
         <div className={"row"}>
           <div className="input-field col s4">
             <button className={"btn purple darken-1"} disabled={loading} onClick={loadDataHandler}>Оновити таблицю</button>
-            <button className={"btn purple darken-1 modal-trigger"} data-target={"create-modal"}  disabled={loading} style={{marginTop: 10}}>Створити новий об'єкт</button>
             <CreateModal modal={"create-modal"}/>
           </div>
           <UsersSearch search={search} selectOnChangeHandle={selectOnChangeHandle} select={select} searchOnChangeHandler={searchOnChangeHandler}/>

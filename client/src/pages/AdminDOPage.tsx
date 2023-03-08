@@ -88,12 +88,17 @@ const AdminDOPage = () => {
         <h3 className={"center-align"} style={{ color: "#E1E1E1" }}>Редагування записів об'єктів руйнації</h3>
         <div className={"row"}>
           <div className="input-field col s4">
-            <button className={"btn purple darken-1"} disabled={loading} onClick={loadDataHandler}>Оновити таблицю</button>
-            <button className={"btn purple darken-1 modal-trigger"} data-target={"create-modal"} disabled={loading} style={{ marginTop: 10 }}>Створити новий об'єкт
+            <button className={"btn purple darken-1"} disabled={loading} onClick={loadDataHandler}>Оновити таблицю
+            </button>
+            <button className={"btn purple darken-1 modal-trigger"} data-target={"create-modal"} disabled={loading}
+                    style={{ marginTop: 10 }}>Створити новий об'єкт
             </button>
             <CreateModal modal={"create-modal"} />
           </div>
-          <DOSearch search={search} selectOnChangeHandle={selectOnChangeHandle} select={select} searchOnChangeHandler={searchOnChangeHandler} />
+          <div className={"col s8"}>
+            <DOSearch search={search} selectOnChangeHandle={selectOnChangeHandle} select={select}
+                      searchOnChangeHandler={searchOnChangeHandler} />
+          </div>
         </div>
         {filterDO.length !== 0 ? (<DOTable loading={loading} />) : (<EmptyTable />)}
       </div>
