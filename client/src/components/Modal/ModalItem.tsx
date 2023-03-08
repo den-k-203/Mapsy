@@ -5,7 +5,6 @@ const ModalItem = ({item, setItem}:any) => {
   const setItemHandler = (event:any) => {
     if(setItem){
       setItem(item);
-      console.log("i", item);
     }
   };
 

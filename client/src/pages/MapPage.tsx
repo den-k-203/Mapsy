@@ -94,35 +94,37 @@ const MapPage = () => {
     });
     dispatch(setFilterDestractObjects(updateForm));
   };
-
-  console.log("d", thisItem);
   return (
     <>
-      <div className={"row"} style={{ marginTop: 15 }}>
-        <div className={"col s7"}>
+      <div className={"row"} style={{ marginTop: 5, marginBottom: 0 }}>
+        <div className={"col s7 left-align"} style={{ marginTop: "2%" }}>
           <button disabled={loading} className={"btn purple darken-1"} onClick={loadDataHandler}>
             Оновити
           </button>
         </div>
         <div className={"col s5"}>
-          <DOSearch search={search} selectOnChangeHandle={selectOnChangeHandle} select={select} searchOnChangeHandler={searchOnChangeHandler} />
+          <DOSearch search={search} selectOnChangeHandle={selectOnChangeHandle} select={select}
+                    searchOnChangeHandler={searchOnChangeHandler} />
         </div>
       </div>
 
       <div className="row">
         <div className="col s8">
-          <MapContainer style={{ height: "70vh", width: "65vw" }} center={[50.4299, 30.5423]} zoom={13} scrollWheelZoom={true}>
-            <TileLayer attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors' url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
+          <MapContainer style={{ height: "70vh", width: "65vw" }} center={[50.4299, 30.5423]} zoom={13}
+                        scrollWheelZoom={true}>
+            <TileLayer
+              attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+              url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
             {filterMarkers.length !== 0 && filterMarkers.map((item, index) => {
-              return (<ModalItem key={index} item={item} setItem={setThisItem}/>);
+              return (<ModalItem key={index} item={item} setItem={setThisItem} />);
             })}
           </MapContainer>
         </div>
         <div className={"col s4"} style={{ color: "white", marginTop: 0 }}>
-          {thisItem?
+          {thisItem ?
             <div>
-              <h5 style={{ marginTop: 0 }}>{thisItem.title}</h5>
               <img src={thisItem.imgPath} alt="Картинка вілсутня." style={{ width: "100%" }} />
+              <h5 className={"center-align"} style={{ marginTop: 0 }}>{thisItem.title}</h5>
               <InfoItem text={itemData[0]} value={thisItem.address} postValue={""} />
               <InfoItem text={itemData[1]} value={thisItem.area} postValue={"м²"} />
               <InfoItem text={itemData[2]} value={thisItem.type} postValue={""} />
@@ -133,10 +135,16 @@ const MapPage = () => {
               <InfoItem text={itemData[7]} value={thisItem.position[0]} postValue={thisItem.position[1]} />
             </div>
             :
-          <div>
-            Item
-          </div>}
-
+            <div className={"center-align"}>
+              <h4 style={{ marginTop: 0 }}>Інформація</h4>
+              <div style={{
+                backgroundColor: "#1E1E1E",
+                boxSizing: "border-box",
+                width: "31vw",
+                height: "59vh",
+                borderRadius: 15,
+              }}></div>
+            </div>}
         </div>
       </div>
     </>

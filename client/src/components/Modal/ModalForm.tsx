@@ -70,15 +70,15 @@ const ModalForm = ({ data, setData }: any) => {
                  onChange={changeHandler} />
           <label htmlFor="dateOfRecovery" className="active">Дата відновлення</label>
         </div>
-        {/*<div className="file-field input-field">*/}
-        {/*  <div className="btn purple darken-1">*/}
-        {/*    <span>Картинка</span>*/}
-        {/*    <input type="file" multiple />*/}
-        {/*  </div>*/}
-        {/*  <div className="file-path-wrapper">*/}
-        {/*    <input className="file-path validate" type="text" placeholder="Завантажте фото" />*/}
-        {/*  </div>*/}
-        {/*</div>*/}
+        <div className="file-field input-field сol s12">
+          <div className="btn purple darken-1">
+            <span>Картинка</span>
+            <input type="file" onChange={(e) => console.log(e.target.files)} accept="image/*"/>
+          </div>
+          <div className="file-path-wrapper">
+            <input className="file-path validate" type="text" placeholder="Завантажити фото" />
+          </div>
+        </div>
       </form>
     </div>
   );
