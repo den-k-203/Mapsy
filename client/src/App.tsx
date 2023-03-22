@@ -1,6 +1,4 @@
 import useRoutesHook from "./hooks/useRoutes.hook";
-import M from "materialize-css";
-import React, { useEffect } from "react";
 import NavBar from "./components/NavBar";
 import Footer from "./components/Footer";
 import { AuthContext } from "./context/authContext";

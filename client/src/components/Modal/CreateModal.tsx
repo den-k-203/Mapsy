@@ -18,7 +18,6 @@ const CreateModal = ({ modal }: any) => {
     dateOfRecovery: "",
   };
   const [data, setData] = useState(initialData);
-  console.log("D", data);
   const { loading, request, error, clearError } = useHttp();
   return (
     <div id={modal} className={"modal"} style={{ borderRadius: 15 }}>

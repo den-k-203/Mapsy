@@ -27,6 +27,8 @@ interface Marker {
 }
 
 const MapPage = () => {
+  const initialSelect = "title";
+  const initialSearch = "";
   const dispatch = useAppDispatch();
   const message = useMessage();
   const { request, error, clearError, loading } = useHttp();
@@ -60,8 +62,8 @@ const MapPage = () => {
   const [thisItem, setThisItem] = useState<any>(markers[0]);
   const itemData = ["Адреса", "Площа", "Тип об'єкту", "Опис", "Зруйновано", "Дата руйнації", "Дата відновлення", "Координати"];
 
-  const [select, setSelect] = useState<string>("");
-  const [search, setSearch] = useState<string>("");
+  const [select, setSelect] = useState<string>(initialSelect);
+  const [search, setSearch] = useState<string>(initialSearch);
 
   const selectOnChangeHandle = (event: any) => {
     setSelect(event.target.value);
@@ -97,11 +99,11 @@ const MapPage = () => {
   return (
     <>
       <div className={"row"} style={{ marginTop: 5, marginBottom: 0 }}>
-        <div className={"col s7 left-align"} style={{ marginTop: "2%" }}>
+        <div className={"col s8 left-align"} style={{ marginTop: "2%" }}>
           <button disabled={loading} className={"btn purple darken-1"} onClick={loadDataHandler}>Оновити</button>
         </div>
-        <div className={"col s5"}>
-          <DOSearch search={search} selectOnChangeHandle={selectOnChangeHandle} select={select} searchOnChangeHandler={searchOnChangeHandler} />
+        <div className={"col s4"}>
+          <DOSearch setSearch={setSearch} setThisItem={setThisItem} filterMarkers={filterMarkers} search={search} selectOnChangeHandle={selectOnChangeHandle} select={select} searchOnChangeHandler={searchOnChangeHandler} />
         </div>
       </div>
 

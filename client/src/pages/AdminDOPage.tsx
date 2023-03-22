@@ -33,7 +33,7 @@ const AdminDOPage = () => {
     }
   }, []);
 
-  useEffect(() => {
+  useEffect(() => {	
     if (filterDO.length === 0 && destractObjects.length !== 0) {
       dispatch(setFilterDestractObjects(destractObjects));
     }
