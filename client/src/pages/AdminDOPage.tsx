@@ -42,6 +42,7 @@ const AdminDOPage = () => {
   const loadDataHandler = async () => {
     const data = await request("http://localhost:5000/api/admin/destract-object", "GET", null, { "Authorization": `Bearer ${token}` });
     dispatch(setDestractObjects(data));
+    dispatch(setFilterDestractObjects(data));
   };
 
   const selectOnChangeHandle = (event: any) => {
