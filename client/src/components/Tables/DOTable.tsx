@@ -31,7 +31,7 @@ const DOTable = ({loading }: any) => {
               <td className={"center-align"}>...</td>
               <td className={"center-align"}>
                 <button data-target={"modal" + index} disabled={loading} className={"btn modal-trigger purple darken-1"}>
-                  <span>Інформація</span>
+                  <span>Редагувати</span>
                 </button>
                 <Modal item={item} index={index} />
               </td>

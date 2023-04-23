@@ -4,10 +4,12 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "dev": "vite",
+    "dev": "vite --host",
     "build": "tsc && vite build",
-    "preview": "vite preview"
-  }, "proxy": "http://localhost:5000/",
+    "preview": "vite preview",
+    "client": "npm run dev"
+  },
+  "proxy": "http://localhost/api",
   "dependencies": {
     "@reduxjs/toolkit": "^1.9.3",
     "leaflet": "^1.9.3",

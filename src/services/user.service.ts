@@ -20,7 +20,7 @@ class UserService {
       const { SALT }: ProcessEnv = process.env;
       let hashPassword: string;
       if (SALT !== undefined) {
-        hashPassword = await bcrypt.hash(password, Number.parseInt(SALT));
+        hashPassword = await bcrypt.hash(password, 7);
       } else {
         throw new Error("SALT не вказана.");
       }

@@ -19,16 +19,15 @@ const DOSearch = ({ filterMarkers, setSearch, setThisItem, select, selectOnChang
     setIsVisible(true);
   };
 
-  return (
+  return (	
     <div>
-
       <div onClick={inputClickHandler} className="input-field col s8">
         <input id="search" name="search" type="text" className="validate" value={search}
                onChange={searchOnChangeHandler} />
         <label htmlFor="search">Пошук</label>
         {search.length !== 0 &&
             (<div  id={"elements"} ref={ref && undefined} className={"col"}
-                style={ isVisible? { position: "absolute", zIndex: 1000 } : { position: "absolute", zIndex: 1000, visibility: "hidden" }}>
+                style={ isVisible? { position: "absolute", zIndex: 100000 } : { position: "absolute", zIndex: 100000, visibility: "hidden" }}>
               {filterMarkers?.map((markers: any, index: number) => {
                 return (
                   <div key={index} onClick={(e) => clickHandler(e, markers)}
@@ -49,7 +48,7 @@ const DOSearch = ({ filterMarkers, setSearch, setThisItem, select, selectOnChang
           <option value={"postName"}>Поштовий індекс</option>
           <option value={"address"}>Адреса</option>
         </select>
-        <label>Тип сортування</label>
+        <label>Значення сортування</label>
       </div>
     </div>
   );

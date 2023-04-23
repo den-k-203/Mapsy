@@ -1,4 +1,7 @@
 /*@import "~materialize-css/dist/css/materialize.min.css";*/
+*{
+    font-family: sans-serif !important;
+}
 body {
     background-color: #121212;
 }
@@ -11,6 +14,9 @@ body {
 .input-field input:focus {
     border-bottom: 1px solid #E1E1E1 !important;
     box-shadow: 0 1px 0 0 #E1E1E1 !important;
+}
+.input-field input {
+    padding-left: 10px !important;
 }
 
 .input-field input {

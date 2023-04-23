@@ -8,7 +8,7 @@ import { useDispatch } from "react-redux";
 import { removeOneDestractObject, updateOneDestractObject } from "../../redux/slices/destractObjectSlice";
 
 const Modal = ({ item, index }: any) => {
-  const itemData = ["Адреса", "Площа", "Тип об'єкту", "Опис", "Зруйновано", "Дата руйнації", "Дата відновлення", "Координати"];
+  const itemData = ["Адреса", "Площа", "Тип іфраструктури", "Опис", "Зруйновано", "Дата руйнації", "Дата відновлення", "Координати"];
   const initialData = item ?
     { _id: item._id, title: item.title, position: item.position, postName: item.postName, address: item.address, type: item.type, area: item.area, imgPath: item.imgPath, text: item.text, percentageOfDestruction: item.percentageOfDestruction, dateOfDestruction: item.dateOfDestruction, dateOfRecovery: item.dateOfRecovery, } :
     { _id: "", title: "", position: [0, 0], postName: "", address: "", type: "", area: "", imgPath: "", text: "", percentageOfDestruction: "", dateOfDestruction: "", dateOfRecovery: "", };

@@ -3,13 +3,13 @@ import React from "react";
 const ModalForm = ({ data, setData }: any) => {
 
 
-  const changeHandler = (event: any) => {
-    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-    // @ts-ignore
-    setData(prevState => {
-      return { ...prevState, [event.target.name]: event.target.value };
-    });
-  };
+	const changeHandler = (event: any) => {
+		// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+		// @ts-ignore
+		setData(prevState => {
+			return { ...prevState, [event.target.name]: event.target.value };
+		});
+	};
 
   const changePosition0Handler = (event: any) => {
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
@@ -36,7 +36,7 @@ const ModalForm = ({ data, setData }: any) => {
         </div>
         <div className="input-field col s6">
           <input id="area" name="area" type="text" className="validate" value={data.area} onChange={changeHandler} />
-          <label htmlFor="area" className="active">Площа</label>
+          <label htmlFor="area" className="active">Площа м²</label>
         </div>
         <div className="input-field col s12">
           <input id="text" name="text" type="text" className="validate" value={data.text} onChange={changeHandler} />
@@ -53,7 +53,7 @@ const ModalForm = ({ data, setData }: any) => {
         </div>
         <div className="input-field col s6">
           <input id="type" name="type" type="text" className="validate" value={data.type} onChange={changeHandler} />
-          <label htmlFor="type" className="active">Тип об'єкту</label>
+          <label htmlFor="type" className="active">Тип інфраструктури</label>
         </div>
         <div className="input-field col s6">
           <input id="percentageOfDestruction" name="percentageOfDestruction" type="text" className="validate"
@@ -70,15 +70,9 @@ const ModalForm = ({ data, setData }: any) => {
                  onChange={changeHandler} />
           <label htmlFor="dateOfRecovery" className="active">Дата відновлення</label>
         </div>
-        <div className="file-field input-field сol s12">
-          <div className="btn purple darken-1">
-            <span>Картинка</span>
-            <input type="file" onChange={(e) => console.log(e.target.files)} accept="image/*"/>
-          </div>
-          <div className="file-path-wrapper">
-            <input className="file-path validate" type="text" placeholder="Завантажити фото" />
-          </div>
-        </div>
+        {/*<div className="input-field сol s12">*/}
+        {/*  <input type="file" onChange={(e) => console.log(e.target.files)} accept="image/*"/>*/}
+        {/*</div>*/}
       </form>
     </div>
   );

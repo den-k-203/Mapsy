@@ -1,15 +1,15 @@
 import React, { useEffect, useState } from "react";
-import { MapContainer, Marker, TileLayer } from "react-leaflet";
+import { Marker } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
 import { LatLngTuple } from "leaflet";
 import useAppSelector from "../hooks/reduxHooks/useAppSelector.hook";
 import useAppDispatch from "../hooks/reduxHooks/useAppDispatch.hook";
 import { useHttp } from "../hooks/http.hook";
 import { setDestractObjects, setFilterDestractObjects } from "../redux/slices/destractObjectSlice";
-import ModalItem from "../components/Modal/ModalItem";
 import { useMessage } from "../hooks/useMessage.hook";
 import InfoItem from "../components/Tables/InfoItem";
 import DOSearch from "../components/DOSearch";
+import MyMapContainer from "../components/MyMapContainer";
 
 interface Marker {
   _id?: string | undefined,
@@ -36,6 +36,31 @@ const MapPage = () => {
   const markers: Marker[] = useAppSelector(state => state.destractObject.DoList);
   const filterMarkers: Marker[] = useAppSelector(state => state.destractObject.filterDoList);
   const token = useAppSelector(state => state.token.accessToken);
+  const kievRegionCities = [
+    "Баришівка",
+    "Біла Церква",
+    "Богуслав",
+    "Бориспіль",
+    "Боярка",
+    "Бровари",
+    "Васильків",
+    "Вишневе",
+    "Ірпінь",
+    "Кагарлик",
+    "Києво-Святошинський район",
+    "Макарів",
+    "Обухів",
+    "Переяслав-Хмельницький",
+    "Ржищів",
+    "Сквира",
+    "Славутич",
+    "Тараща",
+    "Тетіїв",
+    "Узин",
+    "Українка",
+    "Фастів",
+    "Яготин",
+  ];
 
   useEffect(() => {
     message(error);
@@ -59,8 +84,8 @@ const MapPage = () => {
   };
 
   // new
-  const [thisItem, setThisItem] = useState<any>(markers[0]);
-  const itemData = ["Адреса", "Площа", "Тип об'єкту", "Опис", "Зруйновано", "Дата руйнації", "Дата відновлення", "Координати"];
+  const [thisItem, setThisItem] = useState<Marker | undefined>();
+  const itemData = ["Адреса", "Площа", "Тип інфраструктури", "Опис", "Зруйновано", "Дата руйнації", "Дата відновлення", "Координати"];
 
   const [select, setSelect] = useState<string>(initialSelect);
   const [search, setSearch] = useState<string>(initialSearch);
@@ -96,52 +121,120 @@ const MapPage = () => {
     });
     dispatch(setFilterDestractObjects(updateForm));
   };
+  const [zIndex, setZindex] = useState(9999);
+  console.log(zIndex);
+
   return (
     <>
       <div className={"row"} style={{ marginTop: 5, marginBottom: 0 }}>
-        <div className={"col s8 left-align"} style={{ marginTop: "2%" }}>
+        <div className={"col s1 left-align"} style={{ marginTop: "2%" }}>
           <button disabled={loading} className={"btn purple darken-1"} onClick={loadDataHandler}>Оновити</button>
         </div>
+
+        <div className={"col s7"}>
+          <div className="input-field col s3">
+            <select>
+              <optgroup label="Київ (Райони)">
+                <option value="1">Шевченківський район</option>
+                <option value="2">Печерський район</option>
+                <option value="3">Деснянський район</option>
+                <option value="4">Дніпровський район</option>
+                <option value="5">Оболонський район</option>
+                <option value="6">Голосіївський район</option>
+                <option value="7">Солом'янський район</option>
+                <option value="8">Подільський район</option>
+                <option value="9">Святошинський район</option>
+                <option value="10">Дарницький район</option>
+              </optgroup>
+              <optgroup label="Київська область (Населені пункти)">
+                {kievRegionCities.map((item, index) =>
+                  <option value={index}>{item}</option>)}
+              </optgroup>
+            </select>
+            <label>Місто або область</label>
+          </div>
+          <div className="input-field col s3">
+            <select>
+              <option value="" disabled selected>Обрати значення</option>
+              <option value="1">Більше 5000 м²</option>
+              <option value="2">Менше 5000 м²</option>
+            </select>
+            <label>Площа</label>
+          </div>
+          <div className="input-field col s3">
+            <select>
+              <option value="" disabled selected>Обрати значення</option>
+              <option value="1">Більше 30%, менше 50%</option>
+              <option value="2">Більше 50%, менше 75%</option>
+              <option value="3">Більше 75%</option>
+            </select>
+            <label>Ступінь зруйнованості</label>
+          </div>
+          <div className="input-field col s3">
+            <select>
+              <option value="" disabled selected>Обрати значення</option>
+              <option value="1">2022</option>
+              <option value="2">2023</option>
+            </select>
+            <label>Рік руйнування</label>
+          </div>
+        </div>
         <div className={"col s4"}>
-          <DOSearch setSearch={setSearch} setThisItem={setThisItem} filterMarkers={filterMarkers} search={search} selectOnChangeHandle={selectOnChangeHandle} select={select} searchOnChangeHandler={searchOnChangeHandler} />
+          <DOSearch setSearch={setSearch} setThisItem={setThisItem} filterMarkers={filterMarkers} search={search}
+                    selectOnChangeHandle={selectOnChangeHandle} select={select}
+                    searchOnChangeHandler={searchOnChangeHandler} />
         </div>
       </div>
 
       <div className="row">
-        <div className="col s8">
-          <MapContainer style={{ height: "70vh", width: "65vw" }} center={[50.4299, 30.5423]} zoom={13} scrollWheelZoom={true}>
-            <TileLayer attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors' url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
-            {filterMarkers.length !== 0 && filterMarkers.map((item, index) => {
-              return (<ModalItem key={index} item={item} setItem={setThisItem} />);
-            })}
-          </MapContainer>
+        <div className={thisItem ? "col s8" : "col s12"} onClick={(e: any) => {
+
+          if (thisItem) {
+            setZindex(9999);
+          } else {
+            setZindex(0);
+          }
+        }
+
+        }>
+          <MyMapContainer setZindex={setZindex} thisItem={thisItem} setThisItem={setThisItem} filterMarkers={filterMarkers} />
         </div>
-        <div className={"col s4"} style={{ color: "white", marginTop: 0 }}>
-          {thisItem ?
-            <div>
-              <img src={thisItem.imgPath} alt="Картинка вілсутня." style={{ width: "100%" }} />
-              <h5 className={"center-align"} style={{ marginTop: 0 }}>{thisItem.title}</h5>
-              <InfoItem text={itemData[0]} value={thisItem.address} postValue={""} />
-              <InfoItem text={itemData[1]} value={thisItem.area} postValue={"м²"} />
-              <InfoItem text={itemData[2]} value={thisItem.type} postValue={""} />
-              <InfoItem text={itemData[3]} value={thisItem.text} postValue={""} />
-              <InfoItem text={itemData[4]} value={thisItem.percentageOfDestruction} postValue={"%"} />
-              <InfoItem text={itemData[5]} value={thisItem.dateOfDestruction} postValue={""} />
-              <InfoItem text={itemData[6]} value={thisItem.dateOfRecovery} postValue={""} />
-              <InfoItem text={itemData[7]} value={thisItem.position[0]} postValue={thisItem.position[1]} />
+        {thisItem &&
+          <div className={"col s4"} style={{ color: "white", marginTop: 0 }}>
+            <div style={{
+              backgroundColor: "#1f1f1f",
+              padding: "10px",
+              height: "70vh",
+              position: "absolute",
+              zIndex: zIndex,
+            }}>
+              {thisItem ?
+                <div>
+                  <img src={thisItem.imgPath} alt="Картинка вілсутня." style={{ width: "100%" }} />
+                  <h5 className={"center-align"} style={{ marginTop: 0 }}>{thisItem.title}</h5>
+                  <InfoItem text={itemData[0]} value={thisItem.address} postValue={""} />
+                  <InfoItem text={itemData[1]} value={thisItem.area} postValue={"м²"} />
+                  <InfoItem text={itemData[2]} value={thisItem.type} postValue={""} />
+                  <InfoItem text={itemData[3]} value={thisItem.text} postValue={""} />
+                  <InfoItem text={itemData[4]} value={thisItem.percentageOfDestruction} postValue={"%"} />
+                  <InfoItem text={itemData[5]} value={thisItem.dateOfDestruction} postValue={""} />
+                  <InfoItem text={itemData[6]} value={thisItem.dateOfRecovery} postValue={""} />
+                  <InfoItem text={itemData[7]} value={thisItem.position[0]} postValue={thisItem.position[1]} />
+                </div>
+                :
+                <div className={"center-align"}>
+                  <h4 style={{ marginTop: 0 }}>Інформація</h4>
+                  <div style={{
+                    backgroundColor: "#1E1E1E",
+                    boxSizing: "border-box",
+                    width: "31vw",
+                    height: "59vh",
+                    borderRadius: 15,
+                  }}></div>
+                </div>}
             </div>
-            :
-            <div className={"center-align"}>
-              <h4 style={{ marginTop: 0 }}>Інформація</h4>
-              <div style={{
-                backgroundColor: "#1E1E1E",
-                boxSizing: "border-box",
-                width: "31vw",
-                height: "59vh",
-                borderRadius: 15,
-              }}></div>
-            </div>}
-        </div>
+          </div>}
+
       </div>
     </>
   );
