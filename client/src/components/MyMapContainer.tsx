@@ -2,7 +2,6 @@ import React from "react";
 import { MapContainer, TileLayer } from "react-leaflet";
 import ModalItem from "./Modal/ModalItem";
 import Click from "../hooks/click.hook";
-import { Marker } from "leaflet";
 
 const MyMapContainer = ({ filterMarkers, thisItem, setThisItem, setZindex }: {
   filterMarkers: any[],

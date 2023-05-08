@@ -62,6 +62,31 @@ const MapPage = () => {
     "Яготин",
   ];
 
+  const defaultFilterConstructor = {
+    place: "Київ",
+    type: "Критична інфраструктура",
+    degreeOfDestruction: "Частково",
+    startDate: "2022-01-01",
+    endDate: "2023-06-05",
+  };
+
+  const [filterConstructor, setFilterConstructor] = useState(defaultFilterConstructor);
+
+  const changeHandler = (event: any): void => {
+    setFilterConstructor(prevState => {
+      return { ...prevState, [event.target.name]: event.target.value };
+    });
+  };
+
+  const useFilterConstructor = (): Marker[] => {
+    return filterMarkers
+      .filter(marker => marker.type === filterConstructor.type)
+      .filter(marker => marker.address.includes(filterConstructor.place))
+      .filter(marker => marker.percentageOfDestruction === filterConstructor.degreeOfDestruction)
+      .filter(marker => marker.dateOfDestruction > filterConstructor.startDate || marker.dateOfDestruction < filterConstructor.endDate,
+      );
+  };
+
   useEffect(() => {
     message(error);
     clearError();
@@ -77,6 +102,9 @@ const MapPage = () => {
       dispatch(setFilterDestractObjects(markers));
     }
   }, [markers]);
+
+  console.log(filterConstructor);
+
 
   const loadDataHandler = async () => {
     const data = await request("http://localhost:5000/api/admin/destract-object", "GET", null, { "Authorization": `Bearer ${token}` });
@@ -133,20 +161,26 @@ const MapPage = () => {
 
         <div className={"col s7"}>
           <div className="input-field col s3">
-            <select>
+            <select value={filterConstructor.place} onChange={event => setFilterConstructor(
+              prevState => {
+                return { ...prevState, place: event.target.value };
+              },
+            )}>
               <optgroup label="Київ (Райони)">
-                <option value="1">Шевченківський район</option>
-                <option value="2">Печерський район</option>
-                <option value="3">Деснянський район</option>
-                <option value="4">Дніпровський район</option>
-                <option value="5">Оболонський район</option>
-                <option value="6">Голосіївський район</option>
-                <option value="7">Солом'янський район</option>
-                <option value="8">Подільський район</option>
-                <option value="9">Святошинський район</option>
-                <option value="10">Дарницький район</option>
+                <option defaultChecked={true} value="Київ">Київ</option>
+                <option value="Шевченківський район">Шевченківський район</option>
+                <option value="Печерський район">Печерський район</option>
+                <option value="Деснянський район">Деснянський район</option>
+                <option value="Дніпровський район">Дніпровський район</option>
+                <option value="Оболонський район">Оболонський район</option>
+                <option value="Голосіївський район">Голосіївський район</option>
+                <option value="Солом'янський район">Солом'янський район</option>
+                <option value="Подільський район">Подільський район</option>
+                <option value="Святошинський район">Святошинський район</option>
+                <option value="Дарницький район">Дарницький район</option>
               </optgroup>
               <optgroup label="Київська область (Населені пункти)">
+                <option value="99">Київська область</option>
                 {kievRegionCities.map((item, index) =>
                   <option value={index}>{item}</option>)}
               </optgroup>
@@ -154,35 +188,67 @@ const MapPage = () => {
             <label>Місто або область</label>
           </div>
           <div className="input-field col s3">
-            <select>
-              <option value="" disabled selected>Обрати значення</option>
-              <option value="1">Більше 5000 м²</option>
-              <option value="2">Менше 5000 м²</option>
+            <select value={filterConstructor.type} onChange={event => setFilterConstructor(
+              prevState => {
+                return { ...prevState, type: event.target.value };
+              },
+            )}>
+              <option value="" disabled selected>Тип інфраструктури</option>
+              <option defaultChecked={true} value="Транспортна інфраструктура">Транспортна інфраструктура</option>
+              <option value="Енергетична інфраструктура">Енергетична інфраструктура</option>
+              <option value="Комунальна інфраструктура">Комунальна інфраструктура</option>
+              <option value="Соціальна інфраструктура">Соціальна інфраструктура</option>
+              <option value="Критична інфраструктура">Критична інфраструктура</option>
+              <option value="Воєнна інфраструктура">Воєнна інфраструктура</option>
+              <option value="Інші об'єкти">Інші об'єкти</option>
             </select>
-            <label>Площа</label>
+            <label>Тип</label>
           </div>
-          <div className="input-field col s3">
-            <select>
+          <div className="input-field col s2">
+            <select value={filterConstructor.degreeOfDestruction} onChange={event => setFilterConstructor(
+              prevState => {
+                return { ...prevState, degreeOfDestruction: event.target.value };
+              },
+            )}>
               <option value="" disabled selected>Обрати значення</option>
-              <option value="1">Більше 30%, менше 50%</option>
-              <option value="2">Більше 50%, менше 75%</option>
-              <option value="3">Більше 75%</option>
+              <option defaultChecked={true} value="Частково">Частково</option>
+              <option value="Повністю">Повністю</option>
+              <option value="На фазі ремонту">На фазі ремонту</option>
+              <option value="Не ремонтована">Не ремонтована</option>
+              <option value="Невідновна">Невідновна</option>
             </select>
             <label>Ступінь зруйнованості</label>
           </div>
-          <div className="input-field col s3">
-            <select>
-              <option value="" disabled selected>Обрати значення</option>
-              <option value="1">2022</option>
-              <option value="2">2023</option>
-            </select>
-            <label>Рік руйнування</label>
+          <div className="input-field col s2">
+            <input type="date" value={filterConstructor.startDate}
+                   onChange={event => setFilterConstructor(
+                     prevState => {
+                       return { ...prevState, startDate: event.target.value };
+                     },
+                   )} />
+            <label>Від</label>
+          </div>
+          <div className="input-field col s2">
+            <input type="date" value={filterConstructor.endDate}
+                   onChange={event => setFilterConstructor(
+                     prevState => {
+                       return { ...prevState, endDate: event.target.value };
+                     },
+                   )} />
+            <label>До</label>
           </div>
         </div>
+
         <div className={"col s4"}>
-          <DOSearch setSearch={setSearch} setThisItem={setThisItem} filterMarkers={filterMarkers} search={search}
-                    selectOnChangeHandle={selectOnChangeHandle} select={select}
-                    searchOnChangeHandler={searchOnChangeHandler} />
+          <DOSearch
+            setSearch={setSearch}
+            setThisItem={setThisItem}
+            filterMarkers={filterMarkers}
+            search={search}
+            selectOnChangeHandle={selectOnChangeHandle}
+            select={select}
+            searchOnChangeHandler={searchOnChangeHandler}
+          />
         </div>
       </div>
 
@@ -197,7 +263,8 @@ const MapPage = () => {
         }
 
         }>
-          <MyMapContainer setZindex={setZindex} thisItem={thisItem} setThisItem={setThisItem} filterMarkers={filterMarkers} />
+          <MyMapContainer setZindex={setZindex} thisItem={thisItem} setThisItem={setThisItem}
+                          filterMarkers={filterMarkers} />
         </div>
         {thisItem &&
           <div className={"col s4"} style={{ color: "white", marginTop: 0 }}>

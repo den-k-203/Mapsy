@@ -18,6 +18,9 @@ body {
 .input-field input {
     padding-left: 10px !important;
 }
+.modal {
+    z-index: 10001 !important;
+}
 
 .input-field input {
     color: #E1E1E1 !important;

@@ -12,6 +12,8 @@
   "proxy": "http://localhost/api",
   "dependencies": {
     "@reduxjs/toolkit": "^1.9.3",
+    "axios": "^1.4.0",
+    "file-saver": "^2.0.5",
     "leaflet": "^1.9.3",
     "materialize-css": "^1.0.0-rc.2",
     "node-sass": "^8.0.0",
@@ -22,6 +24,7 @@
     "react-router-dom": "^6.8.1"
   },
   "devDependencies": {
+    "@types/file-saver": "^2.0.5",
     "@types/leaflet": "^1.9.1",
     "@types/materialize-css": "^1.0.11",
     "@types/react": "^18.0.27",

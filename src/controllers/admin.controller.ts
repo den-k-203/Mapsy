@@ -8,6 +8,8 @@ import { message } from "../utils/main.js";
 import { DestractObject } from "../interfaces/main.js";
 import { IdDO, User, UserDTO, UserId } from "../types/main.js";
 import UserService from "../services/user.service.js";
+import * as fs from "fs";
+import path from "path";
 
 class AdminController {
   // USERS
@@ -23,6 +25,7 @@ class AdminController {
       return response.status(500).json(message("Помилка отримання списску користувачів."));
     }
   }
+
   // UPDATE ONE
   async updateUser(request: express.Request, response: express.Response) {
     try {
@@ -35,10 +38,40 @@ class AdminController {
       return response.status(500).json(message("Помилка оновлення даних користувача."));
     }
   }
+
+  async uploadFile(request: express.Request, response: express.Response) {
+    try {
+      if (request.file) {
+        const filePath = path.join(__dirname, request.file.filename);
+        fs.readFile(request.file.path, (err, data) => {
+          if (err) {
+            console.log(err);
+            response.status(500).send("Error reading file");
+          } else {
+            fs.writeFile(filePath, data, (err) => {
+              if (err) {
+                console.log(err);
+                response.status(500).send("Error writing file");
+              } else {
+                response.send(`File saved at ${filePath}`);
+              }
+            });
+          }
+        });
+      } else {
+        response.status(400).send("File not uploaded");
+      }
+    } catch (error) {
+      const errorMessage: string = error instanceof Error ? error.message : "Невідома помилка.";
+      console.log(`Помилка оновлення даних користувача. ${errorMessage}.`);
+      return response.status(500).json(message("Помилка оновлення даних."));
+    }
+  }
+
   // DELETE ONE
   async deleteUser(request: express.Request, response: express.Response) {
     try {
-      const {_id}: UserId = request.body;
+      const { _id }: UserId = request.body;
       await UserService.deleteOneUser({ _id });
       return response.status(200).json(message(`Користувач з id:${_id} видалено.`));
     } catch (error) {
@@ -47,6 +80,7 @@ class AdminController {
       return response.status(500).json(message("Помилка видалення користувача."));
     }
   }
+
   // ALL PATH api/admin/destract-object
   // CREATE ONE
   async createDestractObject(request: express.Request, response: express.Response) {
@@ -64,6 +98,7 @@ class AdminController {
       return response.status(500).json(message("Помилка створення об'єкту."));
     }
   }
+
   // GET ALL
   async getDestractObjects(request: express.Request, response: express.Response) {
     try {
@@ -75,6 +110,7 @@ class AdminController {
       return response.status(500).json(message(`Помилка отриманння масиву об'єктів. ${errorMessage}.`));
     }
   }
+
   // UPDATE ONE
   async updateDestractObject(request: express.Request, response: express.Response) {
     try {
@@ -91,6 +127,7 @@ class AdminController {
       return response.status(500).json(message(`Помилка оновлення об'єкту. ${errorMessage}.`));
     }
   }
+
   // DELETE ONE
   async deleteDestractObject(request: express.Request, response: express.Response) {
     try {
