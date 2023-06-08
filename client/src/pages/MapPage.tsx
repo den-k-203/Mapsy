@@ -103,9 +103,6 @@ const MapPage = () => {
     }
   }, [markers]);
 
-  console.log(filterConstructor);
-
-
   const loadDataHandler = async () => {
     const data = await request("http://localhost:5000/api/admin/destract-object", "GET", null, { "Authorization": `Bearer ${token}` });
     dispatch(setDestractObjects(data));

@@ -2,16 +2,16 @@ POST http://localhost:5000/api/admin/destract-object HTTP/1.1
 Content-Type: application/json
 
 {
-  "title": "Школа",
+  "title": "Багатоповерхівка",
   "position": [
-    50.43845573909214,
-    30.522331213099548
+    50.4374234456973909214,
+    30.5253443655633213099548
   ],
   "postName": "01001",
-  "address": "Вулиця Велика Васильківська",
+  "address": "Вулиця Борисоглібська",
   "type": "Соціальна інфраструктура",
-  "area": "3000",
-  "imgPath": "../",
+  "area": "360",
+  "imgPath": "../../public/img_4.png",
   "text": "Зруйнована школа",
   "percentageOfDestruction": "Частково",
   "dateOfDestruction": "02.02.2022",

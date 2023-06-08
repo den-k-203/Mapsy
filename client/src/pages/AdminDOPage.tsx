@@ -101,7 +101,7 @@ const AdminDOPage = () => {
                       searchOnChangeHandler={searchOnChangeHandler} />
           </div>
         </div>
-        {filterDO.length !== 0 ? (<DOTable loading={loading} />) : (<EmptyTable />)}
+        {filterDO.length !== 0 ? (<DOTable isActivate={true} loading={loading} />) : (<EmptyTable />)}
       </div>
     </div>
   );

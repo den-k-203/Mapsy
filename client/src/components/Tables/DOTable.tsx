@@ -3,7 +3,7 @@ import M from "materialize-css";
 import Modal from "../Modal/Modal";
 import useAppSelector from "../../hooks/reduxHooks/useAppSelector.hook";
 
-const DOTable = ({loading }: any) => {
+const DOTable = ({loading, isActivate }: any) => {
   const destractObjects = useAppSelector(state => state.destractObject.filterDoList);
   useEffect(() => {M.AutoInit();}, []);
 
@@ -16,8 +16,8 @@ const DOTable = ({loading }: any) => {
           <th className={"center-align"}>Заголовок</th>
           <th className={"center-align"}>Поштовий індекс</th>
           <th className={"center-align"}>Адреса</th>
-          <th className={"center-align"}>...</th>
-          <th className={"center-align"}>Дії</th>
+          {isActivate && (<th className={"center-align"}>...</th>)}
+          {isActivate && (<th className={"center-align"}>Дії</th>)}
         </tr>
         </thead>
         <tbody>
@@ -28,13 +28,13 @@ const DOTable = ({loading }: any) => {
               <td className={"center-align"}>{item.title}</td>
               <td className={"center-align"}>{item.postName}</td>
               <td className={"center-align"}>{item.address}</td>
-              <td className={"center-align"}>...</td>
-              <td className={"center-align"}>
+              {isActivate && (<td className={"center-align"}>...</td>)}
+              {isActivate && (<td className={"center-align"}>
                 <button data-target={"modal" + index} disabled={loading} className={"btn modal-trigger purple darken-1"}>
                   <span>Редагувати</span>
                 </button>
                 <Modal item={item} index={index} />
-              </td>
+              </td>)}
             </tr>
           );
         })}

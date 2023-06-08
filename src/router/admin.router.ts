@@ -29,7 +29,7 @@ router.patch("/user", roleMiddleware(ADMIN), adminController.updateUser);
 router.get("/user", roleMiddleware(ADMIN), adminController.getUsers);
 router.delete("/user", roleMiddleware(ADMIN), adminController.deleteUser);
 // destract object routes
-router.post("/destract-object", roleMiddleware(ADMIN), validation, adminController.createDestractObject);
+router.post("/destract-object", validation, adminController.createDestractObject);
 router.patch("/destract-object", roleMiddleware(ADMIN), validation, adminController.updateDestractObject);
 router.get("/destract-object", adminController.getDestractObjects);
 router.delete("/destract-object", roleMiddleware(ADMIN), adminController.deleteDestractObject);
