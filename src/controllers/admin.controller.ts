@@ -1,5 +1,5 @@
 import express from "express";
-import { validationResult } from "express-validator";
+import { Result, ValidationError, validationResult } from "express-validator";
 
 import DestractObjectService from "../services/destractObject.service.js";
 
@@ -10,6 +10,7 @@ import { IdDO, User, UserDTO, UserId } from "../types/main.js";
 import UserService from "../services/user.service.js";
 import * as fs from "fs";
 import path from "path";
+import { Error } from "mongoose";
 
 class AdminController {
   // USERS
@@ -85,7 +86,7 @@ class AdminController {
   // CREATE ONE
   async createDestractObject(request: express.Request, response: express.Response) {
     try {
-      const errors = validationResult(request);
+      const errors: Result<ValidationError> = validationResult(request);
       if (!errors.isEmpty()) {
         return response.status(400).json({ message: "Помилка введених даних", errors: errors.array() });
       }

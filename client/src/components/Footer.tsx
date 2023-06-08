@@ -7,8 +7,8 @@ const Footer = () => {
         <div className="container">
           <div className="row">
             <div className="col l6 s12">
-              <h5 className="white-text">Всі права захищені.</h5>
-              <p className="grey-text text-lighten-4">Документація детально описана окремо IPS 23.</p>
+              <h5 className="white-text">CDI (Control of Damaged Infrastructure)</h5>
+              <p className="grey-text text-lighten-4">Всі права захищені.</p>
             </div>
             <div className="col l4 offset-l2 s12">
               <h5 className="white-text">Особисті контакти</h5>

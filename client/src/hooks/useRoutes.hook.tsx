@@ -6,6 +6,7 @@ import LoginPage from "../pages/LoginPage";
 import MapPage from "../pages/MapPage";
 import AdminDOPage from "../pages/AdminDOPage";
 import AdminUserPage from "../pages/AdminUserPage";
+import AnaliticsPage from "../pages/AnaliticsPage";
 
 const useRoutesHook = (role: string | null | undefined) => {
   switch (role) {
@@ -17,6 +18,7 @@ const useRoutesHook = (role: string | null | undefined) => {
           <Route path="/admin/destract-object" element={<AdminDOPage/>}/>
           <Route path="/map" element={<MapPage/>}/>
           <Route path="*" element={<Navigate to="/home" replace/>}/>
+          <Route path="/analitics" element={<AnaliticsPage/>}/>
         </Routes>
       );
     case "USER":
@@ -25,6 +27,7 @@ const useRoutesHook = (role: string | null | undefined) => {
           <Route path="/home" element={<HomePage/>}/>
           <Route path="/map" element={<MapPage/>}/>
           <Route path="*" element={<Navigate to="/home" replace/>}/>
+          <Route path="/analitics" element={<AnaliticsPage/>}/>
         </Routes>
       );
     default:

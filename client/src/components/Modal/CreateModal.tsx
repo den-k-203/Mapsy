@@ -18,6 +18,8 @@ const CreateModal = ({ modal }: any) => {
     percentageOfDestruction: "",
     dateOfDestruction: "",
     dateOfRecovery: "",
+    location: "",
+    neighborhood: ""
   };
   const [data, setData] = useState(initialData);
   const token = useAppSelector(state => state.token.accessToken);

@@ -12,5 +12,7 @@ export interface DestractObject {
     imgPath: string,
     text: string,
     percentageOfDestruction: string | Date,
-    dateOfDestruction: string | Date
+    dateOfDestruction: string | Date,
+    location: string,
+    neighborhood: string
 }

@@ -25,6 +25,11 @@ body {
 .input-field input {
     color: #E1E1E1 !important;
 }
+/* Chrome та Safari */
+input[type="date"]::-webkit-calendar-picker-indicator {
+    filter: invert(100%);
+}
+
 
 .select-dropdown {
     background-color: #121212 !important;

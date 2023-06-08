@@ -12,6 +12,7 @@ const DestractObject: Schema = new Schema({
   percentageOfDestruction: { type: String, require: true },
   dateOfDestruction: { type: String, require: true },
   dateOfRecovery: { type: String, require: true },
+  location: {type: String},
 });
 
 export default model("DestractObject", DestractObject);

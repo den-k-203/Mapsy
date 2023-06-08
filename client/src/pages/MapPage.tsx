@@ -229,7 +229,7 @@ const MapPage = () => {
             <label>Від</label>
           </div>
           <div className="input-field col s2">
-            <input type="date" value={filterConstructor.endDate}
+            <input className={"date"} type="date" value={filterConstructor.endDate}
                    onChange={event => setFilterConstructor(
                      prevState => {
                        return { ...prevState, endDate: event.target.value };
