@@ -2,15 +2,15 @@ POST http://localhost:5000/api/admin/destract-object HTTP/1.1
 Content-Type: application/json
 
 {
-  "title": "Пошкоджений будинок",
+  "title": "Зруйнований будинок",
   "position": [
-    50.462481436275496, 30.59240562513875
+    50.47120974216647, 30.460232226633263
   ],
   "postName": "01001",
-  "address": "Вулиця Русанівська",
+  "address": "Вулиця Берестейська",
   "type": "Соціальна інфраструктура",
   "area": "360",
-  "imgPath": "../../public/img_12.png",
+  "imgPath": "../../public/img_14.png",
   "text": "Зруйнована школа",
   "percentageOfDestruction": "Частково",
   "dateOfDestruction": "02.02.2022",
