@@ -13,7 +13,7 @@ const CreateModal = ({ modal }: any) => {
     address: "",
     type: "",
     area: "",
-    imgPath: "",
+    imgPath: "../../public/house.jpeg",
     text: "",
     percentageOfDestruction: "",
     dateOfDestruction: "",

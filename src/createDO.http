@@ -11,7 +11,7 @@ Content-Type: application/json
   "address": "Вулиця Борисоглібська",
   "type": "Соціальна інфраструктура",
   "area": "360",
-  "imgPath": "../../public/img_4.png",
+  "imgPath": "../../public/house.jpeg",
   "text": "Зруйнована школа",
   "percentageOfDestruction": "Частково",
   "dateOfDestruction": "02.02.2022",

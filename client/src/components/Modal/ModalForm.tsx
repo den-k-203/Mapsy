@@ -91,10 +91,10 @@ const ModalForm = ({ data, setData }: any) => {
                  onChange={changeHandler} />
           <label htmlFor="dateOfRecovery" className="active">Дата відновлення</label>
         </div>
-        <div className="input-field сol s12">
-          <input type="file" onChange={handleFileInputChange} accept="image/*" />
-          <button onClick={handleSaveImage}>save</button>
-        </div>
+        {/*<div className="input-field сol s12">*/}
+        {/*  <input type="file" onChange={handleFileInputChange} accept="image/*" />*/}
+        {/*  <button onClick={handleSaveImage}>save</button>*/}
+        {/*</div>*/}
       </form>
     </div>
   );
