@@ -2,16 +2,15 @@ POST http://localhost:5000/api/admin/destract-object HTTP/1.1
 Content-Type: application/json
 
 {
-  "title": "Багатоповерхівка",
+  "title": "Пошкоджений будинок",
   "position": [
-    50.4374234456973909214,
-    30.5253443655633213099548
+    50.462481436275496, 30.59240562513875
   ],
   "postName": "01001",
-  "address": "Вулиця Борисоглібська",
+  "address": "Вулиця Русанівська",
   "type": "Соціальна інфраструктура",
   "area": "360",
-  "imgPath": "../../public/house.jpeg",
+  "imgPath": "../../public/img_12.png",
   "text": "Зруйнована школа",
   "percentageOfDestruction": "Частково",
   "dateOfDestruction": "02.02.2022",
