@@ -1,7 +1,6 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import ModalForm from "./ModalForm";
 import { useHttp } from "../../hooks/http.hook";
-import { setDestractObjects, setFilterDestractObjects } from "../../redux/slices/destractObjectSlice";
 import useAppSelector from "../../hooks/reduxHooks/useAppSelector.hook";
 
 const CreateModal = ({ modal }: any) => {
@@ -29,7 +28,6 @@ const CreateModal = ({ modal }: any) => {
     // @ts-ignore
     delete data._id;
     const response = await request("http://localhost:5000/api/admin/destract-object", "POST", { ...data }, { "Authorization": `Bearer ${token}` });
-    console.log(response.message);
   };
   return (
     <div id={modal} className={"modal"} style={{ borderRadius: 15 }}>

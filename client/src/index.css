@@ -160,3 +160,38 @@ tab {
     transform-origin: 50% 0%;
     visibility: hidden
 }
+
+.btn-filter-do{
+    background-color: #8e24aa;
+    color: white;
+    border-radius: 5px;
+    font-size: 15px;
+    padding: 15px;
+    border-color: #8e24aa;
+    margin: 20px;
+}
+
+.filter-box{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 500px;
+    background-color: rgb(31, 31, 31);
+    border: 2px solid #000;
+    box-shadow: 24;
+    padding: 16px; 
+    color: white;
+}
+
+.validate{
+    z-index: -1;
+}
+
+.select-dropdown{
+    z-index: -1;
+}
+
+.input-field col s4{
+    z-index: -1;
+}

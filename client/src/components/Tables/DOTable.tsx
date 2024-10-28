@@ -2,6 +2,7 @@ import React, { useEffect } from "react";
 import M from "materialize-css";
 import Modal from "../Modal/Modal";
 import useAppSelector from "../../hooks/reduxHooks/useAppSelector.hook";
+import FilterDOComponent from "../Modal/Filter/FilterDOComponent";
 
 const DOTable = ({loading, isActivate }: any) => {
   const destractObjects = useAppSelector(state => state.destractObject.filterDoList);
@@ -9,6 +10,7 @@ const DOTable = ({loading, isActivate }: any) => {
 
   return (
     <div className="row">
+      <FilterDOComponent/>
       <table className="center" style={{ color: "white", background: "#1F1F1F", borderRadius: 15 }}>
         <thead>
         <tr>
