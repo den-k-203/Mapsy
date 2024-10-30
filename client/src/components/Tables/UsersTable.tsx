@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 import M from "materialize-css";
 import useAppSelector from "../../hooks/reduxHooks/useAppSelector.hook";
 
@@ -33,11 +33,6 @@ const UsersTable = ({ loading }: any) => {
               <td className={"center-align"}>{user.email}</td>
               <td className={"center-align"}>{user.login}</td>
               <td className={"center-align"}>{user.role}</td>
-              {/*<td className={"center-align"}>*/}
-              {/*  <button disabled={loading} className={"btn purple darken-1"}>*/}
-              {/*    <span>Редагувати</span>*/}
-              {/*  </button>*/}
-              {/*</td>*/}
             </tr>
           );
         })}

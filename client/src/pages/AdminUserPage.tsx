@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import NavBarContent from "../components/NavBarContent";
 import CreateModal from "../components/Modal/CreateModal";
-import EmptyTable from "../components/Tables/EmptyTable";
 import { useHttp } from "../hooks/http.hook";
 import useAppSelector from "../hooks/reduxHooks/useAppSelector.hook";
 import useAppDispatch from "../hooks/reduxHooks/useAppDispatch.hook";
@@ -9,6 +8,7 @@ import { useMessage } from "../hooks/useMessage.hook";
 import { setFilterUsers, setUsers } from "../redux/slices/usersSlice";
 import UsersTable from "../components/Tables/UsersTable";
 import UsersSearch from "../components/UsersSearch";
+import UsersHttp from "../http/UserHttp";
 
 const AdminUserPage = () => {
   const users = useAppSelector(state => state.users.users);
@@ -27,9 +27,14 @@ const AdminUserPage = () => {
     }
   }, [users]);
 
+
   const loadDataHandler = async () => {
-    const data = await request("http://localhost:5000/api/admin/user", "GET", null, { "Authorization": `Bearer ${token}` },);
-    dispatch(setUsers(data));
+    if(token){
+      const response = await UsersHttp.getUsers(token)
+      if(response.status == 200){
+        dispatch(setUsers(response.data));
+      }
+    }
   };
 
   const [select, setSelect] = useState<string>("");
@@ -73,7 +78,7 @@ const AdminUserPage = () => {
           </div>
           <UsersSearch search={search} selectOnChangeHandle={selectOnChangeHandle} select={select} searchOnChangeHandler={searchOnChangeHandler}/>
         </div>
-        {filterUsers.length !== 0? (<UsersTable loading={loading}/> ) : (<EmptyTable/>)}
+        {filterUsers.length !== 0? (<UsersTable loading={loading}/> ) : (<div className="empty-do">Список користувачів пустий</div>)}
       </div>
     </div>
   );

@@ -1,9 +1,8 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import NavBarContent from "../components/NavBarContent";
-import EmptyTable from "../components/Tables/EmptyTable";
 import useAppSelector from "../hooks/reduxHooks/useAppSelector.hook";
 import DOTable from "../components/Tables/DOTable";
-import { setDestractObjects, setFilterDestractObjects } from "../redux/slices/destractObjectSlice";
+import { setFilterDestractObjects } from "../redux/slices/destractObjectSlice";
 import { useHttp } from "../hooks/http.hook";
 import { useMessage } from "../hooks/useMessage.hook";
 import useAppDispatch from "../hooks/reduxHooks/useAppDispatch.hook";
@@ -13,8 +12,7 @@ import CreateModal from "../components/Modal/CreateModal";
 const AdminDOPage = () => {
   const destractObjects = useAppSelector(state => state.destractObject.DoList);
   const filterDO = useAppSelector(state => state.destractObject.filterDoList);
-  const token = useAppSelector(state => state.token.accessToken);
-
+ 
   const dispatch = useAppDispatch();
   const message = useMessage();
   const { loading, clearError, error, request } = useHttp();
@@ -27,23 +25,11 @@ const AdminDOPage = () => {
     clearError();
   }, [error, clearError, loading]);
 
-  useEffect(() => {
-    if (destractObjects.length === 0) {
-      loadDataHandler();
-    }
-  }, []);
-
   useEffect(() => {	
     if (filterDO.length === 0 && destractObjects.length !== 0) {
       dispatch(setFilterDestractObjects(destractObjects));
     }
   }, [destractObjects]);
-
-  const loadDataHandler = async () => {
-    const data = await request("http://localhost:5000/api/admin/destract-object", "GET", null, { "Authorization": `Bearer ${token}` });
-    dispatch(setDestractObjects(data));
-    dispatch(setFilterDestractObjects(data));
-  };
 
   const selectOnChangeHandle = (event: any) => {
     setSelect(event.target.value);
@@ -89,10 +75,8 @@ const AdminDOPage = () => {
         <h3 className={"center-align"} style={{ color: "#E1E1E1" }}>Редагування записів об'єктів руйнації</h3>
         <div className={"row"}>
           <div className="input-field col s4">
-            <button className={"btn purple darken-1"} disabled={loading} onClick={loadDataHandler}>Оновити таблицю
-            </button>
             <button className={"btn purple darken-1 modal-trigger"} data-target={"create-modal"} disabled={loading}
-                    style={{ marginTop: 10 }}>Створити новий об'єкт
+                    style={{ marginTop: 10 }}> Додати об'єкт
             </button>
             <CreateModal modal={"create-modal"} />
           </div>
@@ -101,7 +85,7 @@ const AdminDOPage = () => {
                       searchOnChangeHandler={searchOnChangeHandler} />
           </div>
         </div>
-        {filterDO.length !== 0 ? (<DOTable isActivate={true} loading={loading} />) : (<EmptyTable />)}
+        <DOTable/>
       </div>
     </div>
   );
