@@ -5,6 +5,7 @@ import { AuthContext } from "./context/authContext";
 import { useAuth } from "./hooks/auth.hook";
 import useAppSelector from "./hooks/reduxHooks/useAppSelector.hook";
 import { User } from "./types/main";
+import 'react-toastify/dist/ReactToastify.css';
 
 function App(): JSX.Element {
   const user: User = useAppSelector(state => state.user);

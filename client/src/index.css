@@ -19,7 +19,7 @@ body {
     padding-left: 10px !important;
 }
 .modal {
-    z-index: 10001 !important;
+    z-index: 1004 !important;
 }
 
 .input-field input {
@@ -189,9 +189,62 @@ tab {
 }
 
 .select-dropdown{
-    z-index: -1;
+    z-index: 0;
+}
+
+li{
+    z-index: 1;
 }
 
 .input-field col s4{
-    z-index: -1;
+    z-index:-1;
+}
+
+label{
+    z-index: 0;
+}
+
+option{
+    z-index: 2;
+}
+
+.select-wrapper{
+    z-index: 0;
+}
+
+.disabled{
+    z-index: 1;
+}
+
+.empty-do{
+    padding: 20px;
+    color: white;
+    font-size: 20px;
+    text-align: center;
+    background-color: #323232;
+    border-radius: 10px;
+    font-weight: bold;
+    margin: 10px;
+}
+
+.modal-footer{
+    text-align: right;
+}
+
+.edit-content-box{
+    display: flex;
+}
+
+.info-edit-box{
+    width: 50%;
+}
+
+.form-edit-box{
+    width: 75%;
+    margin-left: 10px;
+    padding: 10px;
+}
+
+.btn-filter-do{
+    font-size: 17px;
 }

@@ -21,14 +21,14 @@ const DOSearch = ({ filterMarkers, setSearch, setThisItem, select, selectOnChang
   };
 
   return (	
-    <div style={{position: "absolute", zIndex: -1}}>
+    <div style={{position: "absolute"}}>
       <div onClick={inputClickHandler} className="input-field col s8">
         <input id="search" name="search" type="text" className="validate" value={search}
                onChange={searchOnChangeHandler} />
         <label htmlFor="search">Пошук</label>
         {search.length !== 0 &&
             (<div  id={"elements"} ref={ref && undefined} className={"col"}
-                style={ isVisible? { position: "absolute", zIndex: 10001 } : { position: "absolute", zIndex: -1, visibility: "hidden" }}>
+                style={ isVisible? { position: "absolute"} : { position: "absolute", visibility: "hidden" }}>
               {filterMarkers?.map((markers: any, index: number) => {
                 return (
                   <div key={index} onClick={(e) => clickHandler(e, markers)}
@@ -42,7 +42,7 @@ const DOSearch = ({ filterMarkers, setSearch, setThisItem, select, selectOnChang
       </div>
 
       <div className="input-field col s4">
-        <select value={select} onChange={selectOnChangeHandle}>
+        <select value={select} style={{zIndex: 1}} onChange={selectOnChangeHandle}>
           <option value="" disabled selected>Тип</option>
           <option value={"type"}>Тип</option>
           <option value={"title"}>Заголовок</option>

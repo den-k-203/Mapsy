@@ -67,16 +67,6 @@ const AnalyticPage = () => {
       return { ...prevState, [event.target.name]: event.target.value };
     });
   };
-// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-  // @ts-ignore
-  const useFilterConstructor = (): Marker[] => {
-    return filterMarkers
-      .filter(marker => marker.type === filterConstructor.type)
-      .filter(marker => marker.address.includes(filterConstructor.place))
-      .filter(marker => marker.percentageOfDestruction === filterConstructor.degreeOfDestruction)
-      .filter(marker => marker.dateOfDestruction > filterConstructor.startDate || marker.dateOfDestruction < filterConstructor.endDate,
-      );
-  };
 
   useEffect(() => {
     message(error);
@@ -139,8 +129,6 @@ const AnalyticPage = () => {
     });
     dispatch(setFilterDestractObjects(updateForm));
   };
-  const [zIndex, setZindex] = useState(9999);
-  console.log(zIndex);
 
   const ref = useRef<HTMLDivElement>();
   const [isVisible, setIsVisible] = useState<boolean>(false);
@@ -350,9 +338,9 @@ const AnalyticPage = () => {
               <label htmlFor="search">Пошук</label>
               {search.length !== 0 &&
                 (<div id={"elements"} ref={ref && undefined} className={"col"}
-                      style={isVisible ? { position: "absolute", zIndex: 10001 } : {
+                      style={isVisible ? { position: "absolute", zIndex: 1 } : {
                         position: "absolute",
-                        zIndex: 10001,
+                        zIndex: 1,
                         visibility: "hidden",
                       }}>
                     {filterMarkers?.map((markers: any, index: number) => {
@@ -390,7 +378,7 @@ const AnalyticPage = () => {
         marginTop: 15,
         padding: 15,
       }}>
-        <DOTable isActivate={false} />
+        <DOTable/>
       </div>
       <div className={"col s12"} style={{
         color: "white",

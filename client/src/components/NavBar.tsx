@@ -3,6 +3,7 @@ import useLinksHook from "../hooks/useLinks.hook";
 import useAppSelector from "../hooks/reduxHooks/useAppSelector.hook";
 import { NavLink } from "react-router-dom";
 import { AuthContext } from "../context/authContext";
+import { ToastContainer } from "react-toastify";
 
 
 const NavBar = () => {
@@ -35,6 +36,18 @@ const NavBar = () => {
           </ul>
         </div>
       </nav>
+      <ToastContainer
+        position="bottom-right"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="light"
+      />
     </div>
   );
 };

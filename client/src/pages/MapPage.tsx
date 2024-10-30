@@ -146,8 +146,7 @@ const MapPage = () => {
     });
     dispatch(setFilterDestractObjects(updateForm));
   };
-  const [zIndex, setZindex] = useState(9999);
-  console.log(zIndex);
+  const [zIndex, setZindex] = useState(1);
 
   return (
     <>
@@ -253,7 +252,7 @@ const MapPage = () => {
         <div className={thisItem ? "col s8" : "col s12"} onClick={(e: any) => {
 
           if (thisItem) {
-            setZindex(9999);
+            setZindex(1);
           } else {
             setZindex(0);
           }

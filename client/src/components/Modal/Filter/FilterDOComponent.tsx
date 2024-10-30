@@ -1,6 +1,6 @@
 import { FC, useState } from "react";
 import FilterDOBtnComponent from "./FilterBtnComponent";
-import ModalFilterMenuComponent from "./ModelFilterMenu";
+import ModalFilterMenuComponent from "./ModalFilterMenu";
 
 const FilterDOComponent: FC = () => {
     const [active, setActive] = useState<boolean>(false)

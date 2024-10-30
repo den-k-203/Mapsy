@@ -9,12 +9,12 @@ const UsersSearch = ({select, selectOnChangeHandle, search, searchOnChangeHandle
       </div>
       <div className="input-field col s5">
         <select value={select} onChange={selectOnChangeHandle}>
-          <option value="" disabled selected>Логін</option>
-          <option value={"email"} >Пошта</option>
-          <option value={"login"} >Логін</option>
-          <option value={"firstName"} >Ім'я</option>
-          <option value={"secondName"} >Прізвище</option>
-          <option value={"role"} >Роль</option>
+          <option className="option-user" value="" disabled selected>Логін</option>
+          <option className="option-user" value={"email"} >Пошта</option>
+          <option className="option-user" value={"login"} >Логін</option>
+          <option className="option-user" value={"firstName"} >Ім'я</option>
+          <option className="option-user" value={"secondName"} >Прізвище</option>
+          <option className="option-user" value={"role"} >Роль</option>
         </select>
         <label>Тип сортування</label>
       </div>
