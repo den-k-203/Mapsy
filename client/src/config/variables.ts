@@ -68,5 +68,9 @@ const destructionStates = [
   "Обстежуються"        
 ];
 
-  export { neighborhoods, weapons, destructionTypes, infrastructureTypes, destructionStates };
+
+const itemData = ["Адреса", "Площа", "Тип іфраструктури", "Опис", "Зруйновано", "Дата руйнації", "Дата відновлення", "Координати", 
+  "Тип інфраструктури", "Стан руйнації", "Кількість жертв", "Тип знищення", "Чим знищено", "Район"];
+
+  export { neighborhoods, weapons, destructionTypes, infrastructureTypes, destructionStates, itemData };
 

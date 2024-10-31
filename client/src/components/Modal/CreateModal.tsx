@@ -69,7 +69,6 @@ const CreateModal = ({ modal }: any) => {
           stateDestruction: ""
         })
       }
-      
     }
   };
 
@@ -80,8 +79,11 @@ const CreateModal = ({ modal }: any) => {
           <ModalForm data={data} setData={setData} />
       </div>
       <div className="modal-footer" style={{ backgroundColor: "#1F1F1F" }}>
-        <button className="modal-close btn green darken-3" style={{ marginRight: 10 }} onClick={createDOHandler}>Створити</button>
-        <button className="modal-close btn purple darken-1" style={{ marginRight: 10 }}>Закрити
+        <button className="modal-close btn green darken-3" style={{ marginRight: 10 }} onClick={createDOHandler}>
+          Створити
+        </button>
+        <button className="modal-close btn purple darken-1" style={{ marginRight: 10 }}>
+          Закрити
         </button>
       </div>
     </div>

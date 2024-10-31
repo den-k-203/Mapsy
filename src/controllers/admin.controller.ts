@@ -86,16 +86,16 @@ class AdminController {
   // CREATE ONE
   async createDestractObject(request: express.Request, response: express.Response) {
     try {
+
       const errors: Result<ValidationError> = validationResult(request);
       if (!errors.isEmpty()) {
         return response.status(400).json({ message: "Помилка введених даних", errors: errors.array() });
       }
       const values: DestractObject = request.body;
-      await DestractObjectService.createDO(values);
-      return response.status(200).json(message("Об'єкт сворено"));
+      const data = await DestractObjectService.createDO(values);
+      return response.status(200).json(data);
     } catch (error) {
-      const errorMessage = error instanceof Error ? error.message : "Невідома помилка.";
-      console.log(`Помилка створення об'єкту:${errorMessage}.`);
+      console.error(`Помилка створення об'єкту:${error}.`);
       return response.status(500).json(message("Помилка створення об'єкту."));
     }
   }
@@ -120,8 +120,8 @@ class AdminController {
         return response.status(400).json({ message: "Помилка введених даних", errors: errors.array() });
       }
       const values: DestractObject = request.body;
-      await DestractObjectService.updateOneDO(values);
-      return response.status(200).json(message("Дані об'єкта руйнації оновлено."));
+      const data = await DestractObjectService.updateOneDO(values);
+      return response.status(200).json(data);
     } catch (error) {
       const errorMessage = error instanceof Error ? error.message : "Невідома помилка.";
       console.log(`Помилка оновлення об'єкту. ${errorMessage}.`);
@@ -132,7 +132,7 @@ class AdminController {
   // DELETE ONE
   async deleteDestractObject(request: express.Request, response: express.Response) {
     try {
-      const { _id }: IdDO = request.body;
+      const { _id } = request.params;
       await DestractObjectService.deleteOneDO({ _id });
       return response.status(200).json(message(`Об'єкта руйнації з id:${_id} видалено.`));
     } catch (error) {

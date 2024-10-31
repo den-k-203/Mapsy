@@ -7,6 +7,7 @@ import DOHttp from "../../../http/DOhttp"
 import ModalForm from "../ModalForm"
 import InfoItem from "../../Tables/InfoItem"
 import { toast } from "react-toastify"
+import { itemData } from "../../../config/variables"
 
 interface EditModalProp{
     item: DestructionObject
@@ -74,9 +75,6 @@ const EditModalComponent: FC<EditModalProp> = ({item}) => {
         }
         }
       };
-    
-    const itemData = ["Адреса", "Площа", "Тип іфраструктури", "Опис", "Зруйновано", "Дата руйнації", "Дата відновлення", "Координати", 
-        "Тип інфраструктури", "Стан руйнації", "Кількість жертв", "Тип знищення", "Чим знищено", "Район"];
   
     const [active, setActive] = useState<boolean>(false)
     const handleClose = () => setActive(false)

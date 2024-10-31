@@ -8,7 +8,8 @@ class DestractObjectService {
   async createDO(values: DestractObject) {
     try {
       const destractObject = new DestractObjectModel({ ...values });
-      await destractObject.save();
+      const data = await destractObject.save();
+      return data
     } catch (error) {
       const { message }: any = error;
       throw new Error(`Помилка створення об'єкта руйнації. ${message}`);
@@ -32,7 +33,9 @@ class DestractObjectService {
         throw new Error(`Запису з id:${_id} не інсує`);
       }
       delete values._id;
-      return await DestractObjectModel.updateOne({ _id }, { ...values });
+      await DestractObjectModel.updateOne({ _id }, { ...values });
+      const updataData = await DestractObjectModel.findById(_id)
+      return updataData
     } catch (error) {
       const { message }: any = error;
       throw new Error(message);

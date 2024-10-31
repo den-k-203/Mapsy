@@ -1,12 +1,11 @@
 import { FC, useState } from "react"
 import { Modal, Box, Button, Typography, TextField, FormControl, MenuItem, Select, InputLabel } from '@mui/material';
 import FilterData from "../../../types/filter";
-import { useDispatch } from 'react-redux';
-import { filterDestractObjects } from "../../../redux/slices/destractObjectSlice";
 import doStore from "../../../store/DOStore";
 import DestructionObject from "../../../types/ObjectDestroy";
 import { filterDestructionData } from "../../../services/filter/filterDO";
 import DOHttp from "../../../http/DOhttp";
+import { destructionStates, destructionTypes, infrastructureTypes, neighborhoods, weapons } from "../../../config/variables";
 
 interface ModalProps {
     active: boolean;
@@ -20,7 +19,7 @@ const ModalFilterMenuComponent: FC<ModalProps> = ({ active, setActive }) => {
         damageState: '',
         destroyedBy: '',
         victimCount: { min: 0, max: 0 },
-        district: ''
+        areaName: ''
     });
 
     const handleChange = (key: keyof FilterData, value: any) => {
@@ -36,6 +35,7 @@ const ModalFilterMenuComponent: FC<ModalProps> = ({ active, setActive }) => {
             const result: DestructionObject[] | undefined = filterDestructionData(reseponse.data, filterData)
             if(result)
                 doStore.init(result)
+                handleClose()
         }
     };
 
@@ -70,10 +70,18 @@ const ModalFilterMenuComponent: FC<ModalProps> = ({ active, setActive }) => {
                 <Select
                     value={filterData.objectType}
                     onChange={(e) => handleChange('objectType', e.target.value)}
-                    sx={{ input: { color: 'white' }, color: 'white' }}
+                    MenuProps={{
+                        PaperProps: {
+                            sx: {
+                                backgroundColor: 'black', 
+                                color: 'white', 
+                            },
+                        },
+                    }}
                 >
-                    <MenuItem value="critical_infrastructure">Критична інфраструктура</MenuItem>
-                    <MenuItem value="residential">Житловий сектор</MenuItem>
+                {infrastructureTypes.map((type, index) => (
+                    <MenuItem key={index} value={type}>{type}</MenuItem>
+                ))}
                 </Select>
             </FormControl>
 
@@ -82,10 +90,18 @@ const ModalFilterMenuComponent: FC<ModalProps> = ({ active, setActive }) => {
                 <Select
                     value={filterData.damageState}
                     onChange={(e) => handleChange('damageState', e.target.value)}
-                    sx={{ input: { color: 'white' }, color: 'white' }} 
+                    MenuProps={{
+                        PaperProps: {
+                            sx: {
+                                backgroundColor: 'black', 
+                                color: 'white', 
+                            },
+                        },
+                    }}
                 >
-                    <MenuItem value="partial">Частково зруйновані</MenuItem>
-                    <MenuItem value="complete">Повністю зруйновані</MenuItem>
+                {destructionStates.map((state, index) => (
+                    <MenuItem key={index} value={state}>{state}</MenuItem>
+                ))}
                 </Select>
             </FormControl>
 
@@ -94,10 +110,19 @@ const ModalFilterMenuComponent: FC<ModalProps> = ({ active, setActive }) => {
                 <Select
                     value={filterData.destroyedBy}
                     onChange={(e) => handleChange('destroyedBy', e.target.value)}
-                    sx={{ input: { color: 'white' }, color: 'white' }} 
+                    sx={{ color: 'white' }}
+                    MenuProps={{
+                        PaperProps: {
+                            sx: {
+                                backgroundColor: 'black', 
+                                color: 'white', 
+                            },
+                        },
+                    }}
                 >
-                    <MenuItem value="shahed">Шахед</MenuItem>
-                    <MenuItem value="kalibr">Калібр</MenuItem>
+                {weapons.map((weapons, index) => (
+                    <MenuItem key={index} value={weapons}>{weapons}</MenuItem>
+                ))}
                 </Select>
             </FormControl>
 
@@ -120,22 +145,38 @@ const ModalFilterMenuComponent: FC<ModalProps> = ({ active, setActive }) => {
                 InputLabelProps={{ style: { color: 'white' } }} 
             />
 
-            <TextField
-                label="Район руйнації"
-                value={filterData.district}
-                onChange={(e) => handleChange('district', e.target.value)}
-                fullWidth
-                sx={{ mb: 2, input: { color: 'white' } }} 
-                InputLabelProps={{ style: { color: 'white' } }} 
-            />
-                <div style={{width: 'max-content', margin: 'auto'}}>
-                    <Button variant="contained" color="primary" onClick={handleFilter}>
-                        Підтвердити
-                    </Button>
-                    <Button variant="outlined" color="secondary" onClick={handleClose} sx={{ ml: 2 }}>
-                        Скасувати
-                    </Button>
-                </div>
+            <FormControl fullWidth variant="outlined" style={{ marginTop: 16 }}>    
+                <InputLabel id="district-label"  sx={{ color: 'white' }}>Місто або район</InputLabel>
+                <Select
+                    labelId="areaName-label"
+                    id="areaName"
+                    name="areaName"
+                    onChange={(e) => handleChange('areaName', e.target.value)}
+                    label="Місто або район"
+                    sx={{ color: 'white' }}
+                    MenuProps={{
+                        PaperProps: {
+                            sx: {
+                                backgroundColor: 'black', 
+                                color: 'white', 
+                            },
+                        },
+                    }}
+                >
+                    <MenuItem value="" disabled>Оберіть район</MenuItem>
+                    {neighborhoods.map((neighborhood, index) => (
+                        <MenuItem key={index} value={neighborhood}>{neighborhood}</MenuItem>
+                    ))}
+                </Select>
+            </FormControl>
+            <div style={{width: 'max-content', margin: 'auto'}}>
+                <Button variant="contained" color="primary" onClick={handleFilter}>
+                    Підтвердити
+                </Button>
+                <Button variant="outlined" color="secondary" onClick={handleClose} sx={{ ml: 2 }}>
+                    Скасувати
+                </Button>
+            </div>
             </Box>
         </Modal>
     )

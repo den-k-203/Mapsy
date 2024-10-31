@@ -32,7 +32,7 @@ router.delete("/user", roleMiddleware(ADMIN), adminController.deleteUser);
 router.post("/destract-object", validation, adminController.createDestractObject);
 router.patch("/destract-object", roleMiddleware(ADMIN), validation, adminController.updateDestractObject);
 router.get("/destract-object", adminController.getDestractObjects);
-router.delete("/destract-object", roleMiddleware(ADMIN), adminController.deleteDestractObject);
+router.delete("/destract-object/:_id", roleMiddleware(ADMIN), adminController.deleteDestractObject);
 router.post("/upload", upload.single("file"), adminController.uploadFile);
 
 export default router;

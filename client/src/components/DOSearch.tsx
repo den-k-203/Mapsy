@@ -1,54 +1,83 @@
-import React, { useRef, useState } from "react";
+import { FormControl, InputLabel, MenuItem, Select, TextField } from "@mui/material";
+import { FC, useEffect, useState } from "react";
+import { IoSearch } from "react-icons/io5";
+import doStore from "../store/DOStore";
+import DestructionObject from "../types/ObjectDestroy";
+import DOHttp from "../http/DOhttp";
 
-const DOSearch = ({ filterMarkers, setSearch, setThisItem, select, selectOnChangeHandle, search, searchOnChangeHandler }: any) => {
-  const ref = useRef<HTMLDivElement>();
-  const [isVisible, setIsVisible] = useState<boolean>(false);
+const DOSearch: FC = () => {
+  const [searchValue, setSearchValue] = useState<string>("");
+  const [value, setValue] = useState<string>("");
 
-  const clickHandler = (e: any, markers: any) => {
-    if (setThisItem) {
-      e.stopPropagation();
-      setThisItem(markers);
-      setIsVisible(false);
-      if (setSearch){
-        setSearch(markers.title);
-        setThisItem(markers);
-      }
+  const handleSearch = async () => {
+      const response = await DOHttp.getDOAll()
+
+      if(response.data && response.status == 200){
+        const data = response.data
+        const filtered = data.filter((obj: DestructionObject) => {
+          const attributeValue = obj[searchValue as keyof DestructionObject];
+          return (
+            attributeValue &&
+            attributeValue.toString().toLowerCase().includes(value.toLowerCase())
+          );
+      });
+      
+      doStore.init(filtered);
     }
   };
 
-  const inputClickHandler = (e: any) => {
-    setIsVisible(true);
-  };
+  useEffect(() => {
+    handleSearch();
+  }, [searchValue, value]);
 
-  return (	
-    <div style={{position: "absolute"}}>
-      <div onClick={inputClickHandler} className="input-field col s8">
-        <input id="search" name="search" type="text" className="validate" value={search}
-               onChange={searchOnChangeHandler} />
-        <label htmlFor="search">Пошук</label>
-        {search.length !== 0 &&
-            (<div  id={"elements"} ref={ref && undefined} className={"col"}
-                style={ isVisible? { position: "absolute"} : { position: "absolute", visibility: "hidden" }}>
-              {filterMarkers?.map((markers: any, index: number) => {
-                return (
-                  <div key={index} onClick={(e) => clickHandler(e, markers)}
-                       style={{ color: "#E1E1E1", backgroundColor: "#1F1F1F", padding: "10px" }}>
-                    {markers.title}
-                  </div>
-                );
-              })}
-            </div>
-          )}
-      </div>
-
-      <div className="input-field col s4">
-        <select value={select} style={{zIndex: 1}} onChange={selectOnChangeHandle}>
-          <option value="" disabled selected>Тип</option>
-          <option value={"type"}>Тип</option>
-          <option value={"title"}>Заголовок</option>
-          <option value={"address"}>Адреса</option>
-        </select>
-        <label>Значення сортування</label>
+  return (
+    <div>
+      <div style={{ justifyContent: "center", display: "flex" }}>
+        <TextField
+          label="Пошук"
+          type="text"
+          value={value}
+          onChange={e => setValue(e.target.value)}
+          sx={{ input: { color: 'white' }, color: 'white', marginRight: "20px" }}
+          InputLabelProps={{ style: { color: 'white' }, shrink: true }}
+          required
+        />
+        <FormControl fullWidth sx={{ width: "200px", color: "white", borderColor: "white", marginRight: "10px" }}>
+          <InputLabel sx={{ color: 'white' }}>Значення пошуку</InputLabel>
+          <Select
+            sx={{
+              color: "white",
+              ".MuiOutlinedInput-notchedOutline": {
+                borderColor: "white",
+              },
+              "&.Mui-focused .MuiOutlinedInput-notchedOutline": {
+                borderColor: "white",
+              },
+              "&:hover .MuiOutlinedInput-notchedOutline": {
+                borderColor: "white",
+              },
+            }}
+            value={searchValue}
+            onChange={e => setSearchValue(e.target.value)} // Update search attribute on change
+            MenuProps={{
+              PaperProps: {
+                sx: {
+                  backgroundColor: 'black',
+                  color: 'white',
+                },
+              },
+            }}
+          >
+            <MenuItem value="typeInfrastructure">Тип інфраструктури</MenuItem>
+            <MenuItem value="title">Заголовок</MenuItem>
+            <MenuItem value="address">Адреса</MenuItem>
+            <MenuItem value="whatDestroyed">Зброя</MenuItem>
+            <MenuItem value="areaName">Місто або район</MenuItem>
+          </Select>
+        </FormControl>
+        <button className="btn-filter-do search" onClick={handleSearch}>
+          Пошук <IoSearch size={15} />
+        </button>
       </div>
     </div>
   );
