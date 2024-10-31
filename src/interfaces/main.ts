@@ -2,17 +2,22 @@ export interface ProcessEnv {
     [key: string]: string | undefined
 }
 export interface DestractObject {
-    _id?: string | undefined,
-    title: string,
-    position: number[],
-    postName: string,
-    address: string,
-    type: string,
-    area: number,
-    imgPath: string,
-    text: string,
-    percentageOfDestruction: string | Date,
-    dateOfDestruction: string | Date,
-    location: string,
-    neighborhood: string
+    title: string;
+    position: any[];
+    postName: string;
+    address: string;
+    typeInfrastructure: string;
+    area: number;
+    imgPath: string;
+    description: string;
+    percentageOfDestruction: string;
+    dateOfDestruction: string;
+    dateOfRecovery: string;
+    typeDestruction: string;
+    stateDestruction: string,
+    countVictims: number;
+    whatDestroyed: string;
+    areaName: string;
+    neighborhood: string,
+    _id: string | undefined; 
 }

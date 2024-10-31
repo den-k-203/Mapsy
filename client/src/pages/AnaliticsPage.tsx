@@ -10,6 +10,11 @@ import useAppSelector from "../hooks/reduxHooks/useAppSelector.hook";
 import { MyPie } from "../components/charts/MyPie";
 import { MyLineChart } from "../components/charts/MyLineChart";
 import { MyPolar } from "../components/charts/MyPolar";
+import doStore from "../store/DOStore";
+import FilterChartComponent from "../components/charts/FilterChart";
+import DestructionFilterForm from "../components/Modal/FilterForChart/FilterMenuChart";
+import DOSearch from "../components/DOSearch";
+import SortDoComponent from "../components/SortDO";
 
 
 const AnalyticPage = () => {
@@ -230,98 +235,17 @@ const AnalyticPage = () => {
         marginTop: 15,
         padding: 15,
       }}>
-
-        <div className={"col s7"}>
-          <div className="input-field col s3" style={{ paddingTop: 5 }}>
-            <select style={{ paddingTop: 5 }} value={filterConstructor.place} onChange={event => setFilterConstructor(
-              prevState => {
-                return { ...prevState, place: event.target.value };
-              },
-            )}>
-              <optgroup label="Київ (Райони)">
-                <option defaultChecked={true} value="Київ">Київ</option>
-                <option value="Шевченківський район">Шевченківський район</option>
-                <option value="Печерський район">Печерський район</option>
-                <option value="Деснянський район">Деснянський район</option>
-                <option value="Дніпровський район">Дніпровський район</option>
-                <option value="Оболонський район">Оболонський район</option>
-                <option value="Голосіївський район">Голосіївський район</option>
-                <option value="Солом'янський район">Солом'янський район</option>
-                <option value="Подільський район">Подільський район</option>
-                <option value="Святошинський район">Святошинський район</option>
-                <option value="Дарницький район">Дарницький район</option>
-              </optgroup>
-              <optgroup label="Київська область (Населені пункти)">
-                <option value="99">Київська область</option>
-                {kievRegionCities.map((item, index) =>
-                  <option value={index}>{item}</option>)}
-              </optgroup>
-            </select>
-            <label>Місто або область</label>
-          </div>
-          <div className="input-field col s3" style={{ paddingTop: 5 }}>
-            <select value={filterConstructor.type} onChange={event => setFilterConstructor(
-              prevState => {
-                return { ...prevState, type: event.target.value };
-              },
-            )}>
-              <option value="" disabled selected>Тип інфраструктури</option>
-              <option defaultChecked={true} value="Транспортна інфраструктура">Транспортна інфраструктура</option>
-              <option value="Енергетична інфраструктура">Енергетична інфраструктура</option>
-              <option value="Комунальна інфраструктура">Комунальна інфраструктура</option>
-              <option value="Соціальна інфраструктура">Соціальна інфраструктура</option>
-              <option value="Критична інфраструктура">Критична інфраструктура</option>
-              <option value="Воєнна інфраструктура">Воєнна інфраструктура</option>
-              <option value="Інші об'єкти">Інші об'єкти</option>
-            </select>
-            <label>Тип</label>
-          </div>
-          <div className="input-field col s2" style={{ paddingTop: 5 }}>
-            <select value={filterConstructor.degreeOfDestruction} onChange={event => setFilterConstructor(
-              prevState => {
-                return { ...prevState, degreeOfDestruction: event.target.value };
-              },
-            )}>
-              <option value="" disabled selected>Обрати значення</option>
-              <option defaultChecked={true} value="Частково">Частково</option>
-              <option value="Повністю">Повністю</option>
-              <option value="На фазі ремонту">На фазі ремонту</option>
-              <option value="Не ремонтована">Не ремонтована</option>
-              <option value="Невідновна">Невідновна</option>
-            </select>
-            <label>Ступінь зруйнованості</label>
-          </div>
-          <div className="input-field col s2" style={{ paddingTop: 5 }}>
-            <input type="date" value={filterConstructor.startDate}
-                   onChange={event => setFilterConstructor(
-                     prevState => {
-                       return { ...prevState, startDate: event.target.value };
-                     },
-                   )} />
-            <label>Від</label>
-          </div>
-          <div className="input-field col s2" style={{ paddingTop: 5 }}>
-            <input className={"date"} type="date" value={filterConstructor.endDate}
-                   onChange={event => setFilterConstructor(
-                     prevState => {
-                       return { ...prevState, endDate: event.target.value };
-                     },
-                   )} />
-            <label>До</label>
+        <div className="row">
+          <h4 className={"center-align"}>Кількість зруйнованих об'єтів</h4>
+          <div className="col s12 ">
+            <div className={"col s2"}></div>
+            <div className={"col s8"}>
+              <DestructionFilterForm/>
+            </div>
           </div>
         </div>
       </div>
-      <div className="col s12 center-align" style={{
-        color: "white",
-        background: "#1F1F1F",
-        borderRadius: 15,
-        marginBottom: 15,
-        marginTop: 15,
-        padding: 15,
-      }}>
-        <button className={"btn purple darken-1"} disabled={loading} onClick={loadDataHandler}>Оновити таблицю
-        </button>
-      </div>
+      
       <div className={"col s12"} style={{
         color: "white",
         background: "#1F1F1F",
@@ -330,45 +254,9 @@ const AnalyticPage = () => {
         marginTop: 15,
         padding: 15,
       }}>
-        <div>
-          <div className={"row"}>
-            <div onClick={inputClickHandler} className="input-field col s8">
-              <input id="search" name="search" type="text" className="validate" value={search}
-                     onChange={searchOnChangeHandler} />
-              <label htmlFor="search">Пошук</label>
-              {search.length !== 0 &&
-                (<div id={"elements"} ref={ref && undefined} className={"col"}
-                      style={isVisible ? { position: "absolute", zIndex: 1 } : {
-                        position: "absolute",
-                        zIndex: 1,
-                        visibility: "hidden",
-                      }}>
-                    {filterMarkers?.map((markers: any, index: number) => {
-                      return (
-                        <div key={index} onClick={(e) => clickHandler(e, markers)}
-                             style={{ color: "#E1E1E1", backgroundColor: "#1F1F1F", padding: "10px" }}>
-                          {markers.title}
-                        </div>
-                      );
-                    })}
-                  </div>
-                )}
-            </div>
-
-            <div className="input-field col s4">
-              <select value={select} onChange={selectOnChangeHandle}>
-                <option value="" disabled selected>Тип</option>
-                <option value={"type"}>Тип</option>
-                <option value={"title"}>Заголовок</option>
-                <option value={"address"}>Адреса</option>
-              </select>
-              <label>Значення сортування</label>
-            </div>
-          </div>
-        </div>
-
+        <DOSearch/>
+        <SortDoComponent/>
       </div>
-
 
       <div className={"col s12"} style={{
         color: "white",

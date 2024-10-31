@@ -72,7 +72,7 @@ const ModalForm: FC<ModalFormProps> = ({ data, setData }: any) => {
                           name="areaName"
                           value={data.areaName}
                           onChange={selectChangeHandler}
-                          label="Назва району"
+                          label="Назва району Києва або місто"
                           sx={{ color: 'white' }}
                           MenuProps={{
                               PaperProps: {

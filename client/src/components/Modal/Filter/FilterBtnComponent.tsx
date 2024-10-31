@@ -33,7 +33,7 @@ const FilterDOBtnComponent: FC<FilterDOBtnComponentProps> = ({active, setActive}
 
     return (
         <div className="block-btn-filter-do">
-            <button className="btn-filter-do" data-target="filter" onClick={handleChangeActive}>
+            <button className="btn-filter-do filter" data-target="filter" onClick={handleChangeActive}>
                 Фільтр <CiFilter size={20}/>
             </button>
             <button className="btn-filter-do" onClick={handleRefresh}>

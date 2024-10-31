@@ -12,7 +12,7 @@ const filterDestructionData = (destructionData: DestructionObject[], filterData:
       const matchesVictimCount =
         item.countVictims >= filterData.victimCount.min &&
         (filterData.victimCount.max === 0 || item.countVictims <= filterData.victimCount.max);
-      const matchesDistrict = filterData.district ? item.areaName === filterData.district : true;
+      const matchesDistrict = filterData.areaName ? item.areaName === filterData.areaName : true;
 
       return matchesDateRange && matchesObjectType && matchesDamageState && matchesDestroyedBy && matchesVictimCount && matchesDistrict;
     });

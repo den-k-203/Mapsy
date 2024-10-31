@@ -8,6 +8,7 @@ import { useMessage } from "../hooks/useMessage.hook";
 import useAppDispatch from "../hooks/reduxHooks/useAppDispatch.hook";
 import DOSearch from "../components/DOSearch";
 import CreateModal from "../components/Modal/CreateModal";
+import SortDoComponent from "../components/SortDO";
 
 const AdminDOPage = () => {
   const destractObjects = useAppSelector(state => state.destractObject.DoList);
@@ -81,8 +82,8 @@ const AdminDOPage = () => {
             <CreateModal modal={"create-modal"} />
           </div>
           <div className={"col s8"}>
-            <DOSearch search={search} selectOnChangeHandle={selectOnChangeHandle} select={select}
-                      searchOnChangeHandler={searchOnChangeHandler} />
+            <DOSearch/>
+            <SortDoComponent/>
           </div>
         </div>
         <DOTable/>

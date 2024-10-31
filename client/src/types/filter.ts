@@ -4,5 +4,5 @@ export default interface FilterData {
     damageState: string | null;
     destroyedBy: string | null;
     victimCount: { min: number ; max: number };
-    district: string | null;
+    areaName: string | null;
 }

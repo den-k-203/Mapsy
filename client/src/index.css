@@ -18,9 +18,6 @@ body {
 .input-field input {
     padding-left: 10px !important;
 }
-.modal {
-    z-index: 1004 !important;
-}
 
 .input-field input {
     color: #E1E1E1 !important;
@@ -130,7 +127,7 @@ tab {
 .material-tooltip {
     padding: 10px 8px;
     font-size: 1rem;
-    z-index: 2000;
+    z-index: 2;
     background-color: transparent;
     border-radius: 2px;
     color: #fff;
@@ -168,7 +165,14 @@ tab {
     font-size: 15px;
     padding: 15px;
     border-color: #8e24aa;
-    margin: 20px;
+}
+
+.search{
+    margin-left: 10px;
+}
+
+.filter{
+    margin: 10px;
 }
 
 .filter-box{
@@ -189,11 +193,11 @@ tab {
 }
 
 .select-dropdown{
-    z-index: 0;
+    z-index: 2;
 }
 
 li{
-    z-index: 1;
+    z-index: 2;
 }
 
 .input-field col s4{
@@ -209,7 +213,7 @@ option{
 }
 
 .select-wrapper{
-    z-index: 0;
+    z-index: 1;
 }
 
 .disabled{
@@ -247,4 +251,12 @@ option{
 
 .btn-filter-do{
     font-size: 17px;
+}
+
+.modal-content{
+    z-index: 1005;
+}
+
+#create-modal{
+    z-index: 102;
 }
