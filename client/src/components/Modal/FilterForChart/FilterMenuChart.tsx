@@ -2,6 +2,7 @@ import React, { FC, useState } from 'react';
 import FilterChartComponent from '../../charts/FilterChart';
 import { neighborhoods, weapons } from '../../../config/variables';
 import { TextField, MenuItem, Box, Select, InputLabel, FormControl } from '@mui/material';
+import ExtremumModalComponent from '../Extremum/ExtremumModal';
 
 const DestructionFilterForm: FC = () => {
     const [period, setPeriod] = useState({ start: '', end: '' });
@@ -79,6 +80,7 @@ const DestructionFilterForm: FC = () => {
             <Box sx={{ mt: 4 }}>
                 <FilterChartComponent period={period} weapon={weapon} />
             </Box>
+            <ExtremumModalComponent/>
         </Box>
     );
 };

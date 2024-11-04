@@ -32,6 +32,19 @@ const FilterChartComponent: FC<FilterChartComponentProp> = observer(({ period, w
             return acc;
         }, [] as { name: string; count_objects: number }[]);
 
+    // Функція кастомного Tooltip з чорним текстом
+    const CustomTooltip = ({ active, payload }: any) => {
+        if (active && payload && payload.length) {
+            return (
+                <div className="custom-tooltip" style={{ backgroundColor: '#fff', border: '1px solid #ccc', padding: '10px', color: 'black' }}>
+                    <p>{`Назва об'єкта: ${payload[0].payload.name}`}</p>
+                    <p>{`Кількість об'єктів: ${payload[0].value}`}</p>
+                </div>
+            );
+        }
+        return null;
+    };
+
     return (
         <>
             {objects.length === 0 ? (
@@ -54,7 +67,7 @@ const FilterChartComponent: FC<FilterChartComponentProp> = observer(({ period, w
                         <CartesianGrid strokeDasharray="3 3" />
                         <XAxis dataKey="name" />
                         <YAxis />
-                        <Tooltip />
+                        <Tooltip content={<CustomTooltip />} />
                         <Bar dataKey="count_objects" fill="#8884d8" />
                     </BarChart>
                 </ResponsiveContainer>

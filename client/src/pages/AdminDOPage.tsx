@@ -9,6 +9,7 @@ import useAppDispatch from "../hooks/reduxHooks/useAppDispatch.hook";
 import DOSearch from "../components/DOSearch";
 import CreateModal from "../components/Modal/CreateModal";
 import SortDoComponent from "../components/SortDO";
+import BtnGenerateDataComponent from "../components/Modal/GenerateData/BtnGenerateData";
 
 const AdminDOPage = () => {
   const destractObjects = useAppSelector(state => state.destractObject.DoList);
@@ -79,7 +80,8 @@ const AdminDOPage = () => {
             <button className={"btn purple darken-1 modal-trigger"} data-target={"create-modal"} disabled={loading}
                     style={{ marginTop: 10 }}> Додати об'єкт
             </button>
-            <CreateModal modal={"create-modal"} />
+            <CreateModal modal={"create-modal"} /><br/>
+            <BtnGenerateDataComponent/>
           </div>
           <div className={"col s8"}>
             <DOSearch/>
