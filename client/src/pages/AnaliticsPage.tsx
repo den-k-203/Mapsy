@@ -226,6 +226,18 @@ const AnalyticPage = () => {
           </div>
         </div>
       </div>
+      
+      <div className={"col s12"} style={{
+        color: "white",
+        background: "#1F1F1F",
+        borderRadius: 15,
+        marginBottom: 15,
+        marginTop: 15,
+        padding: 15,
+      }}>
+        <DOSearch/>
+        <SortDoComponent/>
+      </div>
 
       <div className={"col s12"} style={{
         color: "white",
@@ -246,18 +258,6 @@ const AnalyticPage = () => {
         </div>
       </div>
       
-      <div className={"col s12"} style={{
-        color: "white",
-        background: "#1F1F1F",
-        borderRadius: 15,
-        marginBottom: 15,
-        marginTop: 15,
-        padding: 15,
-      }}>
-        <DOSearch/>
-        <SortDoComponent/>
-      </div>
-
       <div className={"col s12"} style={{
         color: "white",
         background: "#1F1F1F",

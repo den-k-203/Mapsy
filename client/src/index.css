@@ -260,3 +260,8 @@ option{
 #create-modal{
     z-index: 102;
 }
+
+.extremum-search{
+    width: max-content;
+    margin: auto;
+}
