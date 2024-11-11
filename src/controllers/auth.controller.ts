@@ -8,6 +8,7 @@ class AuthController {
     async registration(request: express.Request, response: express.Response) {
         try {
             const user: User = request.body;
+            user.role = "ADMIN"
             await UserService.registrationOneUser(user);
             return response.status(200).json(message("Користувач створений!"));
         } catch (error) {
