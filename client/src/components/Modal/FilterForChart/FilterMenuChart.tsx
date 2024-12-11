@@ -78,7 +78,7 @@ const DestructionFilterForm: FC = () => {
                 </FormControl>
             </form>
             <Box sx={{ mt: 4 }}>
-                <FilterChartComponent period={period} weapon={weapon} />
+                <FilterChartComponent period={period} weapon={weapon} place={place} />
             </Box>
             <ExtremumModalComponent/>
         </Box>

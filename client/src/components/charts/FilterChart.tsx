@@ -6,9 +6,10 @@ import { observer } from "mobx-react-lite";
 interface FilterChartComponentProp {
     period: { start: string; end: string };
     weapon: string;
+    place: string;
 }
 
-const FilterChartComponent: FC<FilterChartComponentProp> = observer(({ period, weapon }) => {
+const FilterChartComponent: FC<FilterChartComponentProp> = observer(({ period, weapon, place }) => {
     const { start, end } = period;
 
     const objects = doStore.destructionObjects
@@ -19,7 +20,8 @@ const FilterChartComponent: FC<FilterChartComponentProp> = observer(({ period, w
             return (
                 (!start || destructionDate >= startDate) &&
                 (!end || destructionDate <= endDate) &&
-                (!weapon || obj.whatDestroyed.includes(weapon))
+                (!weapon || obj.whatDestroyed.includes(weapon)) &&
+                (!place || obj.neighborhood.includes(place))
             );
         })
         .reduce((acc, obj) => {
@@ -32,7 +34,6 @@ const FilterChartComponent: FC<FilterChartComponentProp> = observer(({ period, w
             return acc;
         }, [] as { name: string; count_objects: number }[]);
 
-    // Функція кастомного Tooltip з чорним текстом
     const CustomTooltip = ({ active, payload }: any) => {
         if (active && payload && payload.length) {
             return (
