@@ -25,7 +25,6 @@ const AnalyticPage = () => {
   const filterMarkers: Marker[] = useAppSelector(state => state.destractObject.filterDoList);
   const token = useAppSelector(state => state.token.accessToken);
 
-
   useEffect(() => {
     message(error);
     clearError();

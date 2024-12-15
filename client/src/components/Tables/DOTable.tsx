@@ -7,6 +7,7 @@ import DOHttp from "../../http/DOhttp";
 import DestructionObject from "../../types/ObjectDestroy";
 import EditModalComponent from "../Modal/Edit/EditModal";
 import useAppSelector from "../../hooks/reduxHooks/useAppSelector.hook";
+import ModalInfoComponent from "../Modal/ModalInfo";
 
 const DOTable: FC = observer(() => {
   const role = useAppSelector(state => state.user.role);
@@ -62,6 +63,10 @@ const DOTable: FC = observer(() => {
                       <EditModalComponent item={item} />
                     </td>
                   )}
+                  <td className="center-align">
+                    <ModalInfoComponent item={item}/>
+                  </td>
+                  <td className="center-align">...</td>
                 </tr>
               ))}
             </tbody>
