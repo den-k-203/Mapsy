@@ -3,11 +3,19 @@ import FilterChartComponent from '../../charts/FilterChart';
 import { neighborhoods, weapons } from '../../../config/variables';
 import { TextField, MenuItem, Box, Select, InputLabel, FormControl } from '@mui/material';
 import ExtremumModalComponent from '../Extremum/ExtremumModal';
+import doStore from '../../../store/DOStore';
+import { parse } from 'date-fns';
 
 const DestructionFilterForm: FC = () => {
-    const [period, setPeriod] = useState({ start: '', end: '' });
-    const [weapon, setWeapon] = useState('');
+    const dates = doStore.destructionObjects.map(item => new Date(item.dateOfDestruction).getTime());
+    const minDate = new Date(Math.min(...dates));
+    const maxDate = new Date(Math.max(...dates));
+
+    const formatDateForInput = (date: Date) => date.toISOString().split('T')[0];
+
     const [place, setPlace] = useState('')
+    const [period, setPeriod] = useState({ start: formatDateForInput(minDate), end: formatDateForInput(maxDate) });
+    const [weapon, setWeapon] = useState('');
 
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
@@ -34,48 +42,6 @@ const DestructionFilterForm: FC = () => {
                     InputLabelProps={{ style: { color: 'white' }, shrink: true }}
                     required
                 />
-                <FormControl fullWidth sx={{ mb: 2, color: "white" }}>
-                    <InputLabel sx={{ color: 'white' }}>Зброя</InputLabel>
-                    <Select
-                        value={weapon}
-                        onChange={(e) => setWeapon(e.target.value)}
-                        MenuProps={{
-                            PaperProps: {
-                                sx: {
-                                    backgroundColor: 'black', 
-                                    color: 'white',
-                                    input: { color: "white" } 
-                                },
-                            },
-                        }}
-                    >
-                    <MenuItem key={0} value={""}>{"Відсутня"}</MenuItem>
-                    {weapons.map((item, index) => (
-                        <MenuItem style={{color: "white"}} key={index+1} value={item}><span style={{color: "white"}}>{item}</span></MenuItem>
-                    ))}
-                    </Select>
-                </FormControl>
-                <FormControl fullWidth sx={{ mb: 2, color: "white" }}>
-                    <InputLabel sx={{ color: 'white' }}>Місто або район</InputLabel>
-                    <Select
-                        value={place}
-                        onChange={(e) => setPlace(e.target.value)}
-                        MenuProps={{
-                            PaperProps: {
-                                sx: {
-                                    backgroundColor: 'black', 
-                                    color: 'white',
-                                    input: { color: "white" } 
-                                },
-                            },
-                        }}
-                    >
-                    <MenuItem key={0} value={""}>{"Відсутнє"}</MenuItem>
-                    {neighborhoods.map((item, index) => (
-                        <MenuItem style={{color: "white"}} key={index+1} value={item}><span style={{color: "white"}}>{item}</span></MenuItem>
-                    ))}
-                    </Select>
-                </FormControl>
             </form>
             <Box sx={{ mt: 4 }}>
                 <FilterChartComponent period={period} weapon={weapon} place={place} />

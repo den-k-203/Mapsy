@@ -13,6 +13,7 @@ const ExtremumModalComponent: FC = () => {
         setAnswer(null);
         try {
             const data = doStore.destructionObjects;
+            console.log(doStore.destructionObjects[1])
             const response = await GPTHttp.getAnswer(data);
             if (response.data) {
                 setAnswer(response.data.gpt_answer);
@@ -36,7 +37,7 @@ const ExtremumModalComponent: FC = () => {
                         <HashLoader color="purple"/>
                     </div>
                 ) : (
-                    answer && <div>{answer}</div>
+                    answer && <div style={{fontSize: "30px"}}>{answer}</div>
                 )}
             </div>
         </>
